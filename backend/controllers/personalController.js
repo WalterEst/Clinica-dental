@@ -1,5 +1,6 @@
 const Personal = require('../models/personalModel');
 
+//obtiene todo el personal
 const getPersonal = (req, res, next) => {
   Personal.getAll((err, data) => {
     if (err) return next(new Error('Error al obtener personal'));
@@ -7,6 +8,7 @@ const getPersonal = (req, res, next) => {
   });
 };
 
+//obtiene un personal por id
 const getPersonalById = (req, res, next) => {
   Personal.getById(req.params.id, (err, data) => {
     if (err) return next(new Error('Error al obtener personal por ID'));
@@ -14,6 +16,7 @@ const getPersonalById = (req, res, next) => {
   });
 };
 
+//crea un nuevo personal
 const createPersonal = (req, res, next) => {
   Personal.create(req.body, (err, result) => {
     if (err) return next(new Error('Error al agregar personal'));
@@ -21,6 +24,7 @@ const createPersonal = (req, res, next) => {
   });
 };
 
+//actualiza un personal
 const updatePersonal = (req, res, next) => {
   Personal.update(req.params.id, req.body, (err, result) => {
     if (err) return next(new Error('Error al actualizar personal'));
@@ -28,6 +32,7 @@ const updatePersonal = (req, res, next) => {
   });
 };
 
+//elimina un personal
 const deletePersonal = (req, res, next) => {
   Personal.delete(req.params.id, (err, result) => {
     if (err) return next(new Error('Error al eliminar personal'));
@@ -35,6 +40,7 @@ const deletePersonal = (req, res, next) => {
   });
 };
 
+//exporta las funciones
 module.exports = {
   getPersonal,
   getPersonalById,

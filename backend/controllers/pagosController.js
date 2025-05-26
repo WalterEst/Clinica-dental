@@ -1,5 +1,6 @@
 const Pago = require('../models/pagosModel');
 
+//obtiene todos los pagos
 const getPagos = (req, res, next) => {
   Pago.getAll((err, data) => {
     if (err) return next(new Error('Error al obtener pagos'));
@@ -7,6 +8,7 @@ const getPagos = (req, res, next) => {
   });
 };
 
+//obtiene un pago especifico
 const getPagoById = (req, res, next) => {
   Pago.getById(req.params.id, (err, data) => {
     if (err) return next(new Error('Error al obtener pago por ID'));
@@ -14,6 +16,7 @@ const getPagoById = (req, res, next) => {
   });
 };
 
+//crea un pago
 const createPago = (req, res, next) => {
   Pago.create(req.body, (err, result) => {
     if (err) return next(new Error('Error al agregar pago'));
@@ -21,6 +24,7 @@ const createPago = (req, res, next) => {
   });
 };
 
+//actualiza un pago
 const updatePago = (req, res, next) => {
   Pago.update(req.params.id, req.body, (err, result) => {
     if (err) return next(new Error('Error al actualizar pago'));
@@ -28,6 +32,7 @@ const updatePago = (req, res, next) => {
   });
 };
 
+//elimina un pago
 const deletePago = (req, res, next) => {
   Pago.delete(req.params.id, (err, result) => {
     if (err) return next(new Error('Error al eliminar pago'));
@@ -35,6 +40,7 @@ const deletePago = (req, res, next) => {
   });
 };
 
+//exporta las funciones
 module.exports = {
   getPagos,
   getPagoById,

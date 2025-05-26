@@ -1,5 +1,6 @@
 const db = require('../config/database');
 
+//define Paciente con funciones para interactuar con paciente en la base de datos
 const Paciente = {
   getAll: (callback) => {
     db.query('SELECT * FROM paciente', callback);

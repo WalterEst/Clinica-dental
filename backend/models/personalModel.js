@@ -1,5 +1,6 @@
 const db = require('../config/database');
 
+//define Personal con funciones para interactuar con personal en la base de datos
 const Personal = {
   getAll: (callback) => {
     db.query('SELECT * FROM personal', callback);

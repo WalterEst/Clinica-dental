@@ -1,5 +1,6 @@
 const Cita = require('../models/citaModel');
 
+//obtiene todas las citas
 const getCitas = (req, res, next) => {
   Cita.getAll((err, data) => {
     if (err) return next(new Error('Error al obtener citas'));
@@ -7,6 +8,7 @@ const getCitas = (req, res, next) => {
   });
 };
 
+//obtiene una cita especifica
 const getCitaById = (req, res, next) => {
   Cita.getById(req.params.id, (err, data) => {
     if (err) return next(new Error('Error al obtener citas por ID'));
@@ -15,6 +17,7 @@ const getCitaById = (req, res, next) => {
   });
 };
 
+//crea una cita
 const createCita = (req, res, next) => {
   Cita.create(req.body, (err, result) => {
     if (err) return next(new Error('Error al agregar citas'));
@@ -22,6 +25,7 @@ const createCita = (req, res, next) => {
   });
 };
 
+//actualiza una cita
 const updateCita = (req, res, next) => {
   Cita.update(req.params.id, req.body, (err, result) => {
     if (err) return next(new Error('Error al actualizar Cita'));
@@ -30,6 +34,7 @@ const updateCita = (req, res, next) => {
   });
 };
 
+//elimina una cita
 const deleteCita = (req, res, next) => {
   Cita.delete(req.params.id, (err, result) => {
     if (err) return next(new Error('Error al eliminar Cita'));
@@ -38,6 +43,7 @@ const deleteCita = (req, res, next) => {
   });
 };
 
+//exporta las funciones
 module.exports = {
   getCitas,
   getCitaById,

@@ -1,5 +1,6 @@
 const PacienteTratamiento = require('../models/paciente_tratamientoModel');
 
+//obtiene todos los tratamientos por paciente
 const getPacienteTratamientos = (req, res, next) => {
   PacienteTratamiento.getAll((err, data) => {
     if (err) return next(new Error('Error al obtener tratamientos del paciente'));
@@ -7,6 +8,7 @@ const getPacienteTratamientos = (req, res, next) => {
   });
 };
 
+//obtiene un tratamiento por especifico
 const getPacienteTratamientoById = (req, res, next) => {
   PacienteTratamiento.getById(req.params.id, (err, data) => {
     if (err) return next(new Error('Error al obtener tratamiento del paciente por ID'));
@@ -15,6 +17,7 @@ const getPacienteTratamientoById = (req, res, next) => {
   });
 };
 
+//crea un nuevo tratamiento para un paciente
 const createPacienteTratamiento = (req, res, next) => {
   PacienteTratamiento.create(req.body, (err, result) => {
     if (err) return next(new Error('Error al agregar tratamiento al paciente'));
@@ -22,6 +25,7 @@ const createPacienteTratamiento = (req, res, next) => {
   });
 };
 
+//actualiza un tratamiento de un paciente
 const updatePacienteTratamiento = (req, res, next) => {
   PacienteTratamiento.update(req.params.id, req.body, (err, result) => {
     if (err) return next(new Error('Error al actualizar tratamiento del paciente'));
@@ -30,6 +34,7 @@ const updatePacienteTratamiento = (req, res, next) => {
   });
 };
 
+//elimina un tratamiento de un paciente
 const deletePacienteTratamiento = (req, res, next) => {
   PacienteTratamiento.delete(req.params.id, (err, result) => {
     if (err) return next(new Error('Error al eliminar tratamiento del paciente'));
@@ -38,6 +43,7 @@ const deletePacienteTratamiento = (req, res, next) => {
   });
 };
 
+//exporta las funciones
 module.exports = {
   getPacienteTratamientos,
   getPacienteTratamientoById,

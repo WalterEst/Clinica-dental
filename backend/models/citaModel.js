@@ -1,5 +1,6 @@
 const db = require('../config/database');
 
+//define Cita con funciones para interactuar con cita en la base de datos
 const Cita = {
   getAll: (callback) => {
     db.query('SELECT * FROM cita', callback);

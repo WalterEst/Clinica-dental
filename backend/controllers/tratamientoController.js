@@ -1,5 +1,6 @@
 const Tratamiento = require('../models/tratamientoModel');
 
+//obtener los tratamientos
 const getTratamientos = (req, res, next) => {
   Tratamiento.getAll((err, data) => {
     if (err) return next(new Error('Error al obtener tratamientos'));
@@ -7,6 +8,7 @@ const getTratamientos = (req, res, next) => {
   });
 };
 
+//obtener un tratamiento especifico
 const getTratamientoById = (req, res, next) => {
   Tratamiento.getById(req.params.id, (err, data) => {
     if (err) return next(new Error('Error al obtener tratamiento por ID'));
@@ -14,6 +16,7 @@ const getTratamientoById = (req, res, next) => {
   });
 };
 
+//crea un nuevo tratamiento
 const createTratamiento = (req, res, next) => {
   Tratamiento.create(req.body, (err, result) => {
     if (err) return next(new Error('Error al agregar tratamiento'));
@@ -21,6 +24,7 @@ const createTratamiento = (req, res, next) => {
   });
 };
 
+//actualiza un tratamiento
 const updateTratamiento = (req, res, next) => {
   Tratamiento.update(req.params.id, req.body, (err, result) => {
     if (err) return next(new Error('Error al actualizar tratamiento'));
@@ -28,6 +32,7 @@ const updateTratamiento = (req, res, next) => {
   });
 };
 
+//elimina un tratamiento
 const deleteTratamiento = (req, res, next) => {
   Tratamiento.delete(req.params.id, (err, result) => {
     if (err) return next(new Error('Error al eliminar tratamiento'));
@@ -35,6 +40,7 @@ const deleteTratamiento = (req, res, next) => {
   });
 };
 
+//exporta las funciones
 module.exports = {
   getTratamientos,
   getTratamientoById,

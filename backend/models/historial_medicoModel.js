@@ -1,5 +1,6 @@
 const db = require('../config/database');
 
+//define HistorialMedico con funciones para interactuar con historial medico en la base de datos
 const HistorialMedico = {
   getAll: (callback) => {
     db.query('SELECT * FROM historial_medico', callback);

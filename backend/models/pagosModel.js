@@ -1,5 +1,6 @@
 const db = require('../config/database');
 
+//define Pagos con funciones para interactuar con pagos en la base de datos
 const Pagos = {
   getAll: (callback) => {
     db.query('SELECT * FROM pagos', callback);

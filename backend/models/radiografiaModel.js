@@ -1,5 +1,6 @@
 const db = require('../config/database');
 
+//define Radiografia con funciones para interactuar con radiografia en la base de datos
 const Radiografia = {
   getAll: (callback) => {
     db.query('SELECT * FROM radiografia', callback);

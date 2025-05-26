@@ -1,5 +1,6 @@
 const db = require('../config/database');
 
+//define Tratamiento con funciones para interactuar con tratamiento en la base de datos
 const Tratamiento = {
   getAll: (callback) => {
     db.query('SELECT * FROM tratamiento', callback);

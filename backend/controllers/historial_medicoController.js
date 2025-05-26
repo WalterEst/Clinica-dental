@@ -1,5 +1,6 @@
 const Historial = require('../models/historial_medicoModel');
 
+//obtiene todos los historiales medicos
 const getHistoriales = (req, res, next) => {
   Historial.getAll((err, data) => {
     if (err) return next(new Error('Error al obtener historial'));
@@ -7,6 +8,7 @@ const getHistoriales = (req, res, next) => {
   });
 };
 
+//obtiene un historial medico por id
 const getHistorialById = (req, res, next) => {
   Historial.getById(req.params.id, (err, data) => {
     if (err) return next(new Error('Error al obtener historial por ID'));
@@ -15,6 +17,7 @@ const getHistorialById = (req, res, next) => {
   });
 };
 
+//crea un nuevo historial medico
 const createHistorial = (req, res, next) => {
   Historial.create(req.body, (err, result) => {
     if (err) return next(new Error('Error al agregar historial'));
@@ -22,6 +25,7 @@ const createHistorial = (req, res, next) => {
   });
 };
 
+//actualiza un historial medico
 const updateHistorial = (req, res, next) => {
   Historial.update(req.params.id, req.body, (err, result) => {
     if (err) return next(new Error('Error al actualizar historial'));
@@ -30,6 +34,7 @@ const updateHistorial = (req, res, next) => {
   });
 };
 
+//elimina un historial
 const deleteHistorial = (req, res, next) => {
   Historial.delete(req.params.id, (err, result) => {
     if (err) return next(new Error('Error al eliminar historial'));

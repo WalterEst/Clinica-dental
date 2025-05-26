@@ -1,5 +1,6 @@
 const Radiografia = require('../models/radiografiaModel');
 
+//obtiene las radiografia
 const getRadiografias = (req, res, next) => {
   Radiografia.getAll((err, data) => {
     if (err) return next(new Error('Error al obtener radiografías'));
@@ -7,6 +8,7 @@ const getRadiografias = (req, res, next) => {
   });
 };
 
+//obtiene una radiografia especifica
 const getRadiografiaById = (req, res, next) => {
   Radiografia.getById(req.params.id, (err, data) => {
     if (err) return next(new Error('Error al obtener radiografía por ID'));
@@ -14,6 +16,7 @@ const getRadiografiaById = (req, res, next) => {
   });
 };
 
+//crea un registro de una radiografia
 const createRadiografia = (req, res, next) => {
   Radiografia.create(req.body, (err, result) => {
     if (err) return next(new Error('Error al agregar radiografía'));
@@ -21,6 +24,7 @@ const createRadiografia = (req, res, next) => {
   });
 };
 
+//actualiza un registro de una radiografia
 const updateRadiografia = (req, res, next) => {
   Radiografia.update(req.params.id, req.body, (err, result) => {
     if (err) return next(new Error('Error al actualizar radiografía'));
@@ -28,6 +32,7 @@ const updateRadiografia = (req, res, next) => {
   });
 };
 
+//elimina el registro de una radiografia
 const deleteRadiografia = (req, res, next) => {
   Radiografia.delete(req.params.id, (err, result) => {
     if (err) return next(new Error('Error al eliminar radiografía'));
@@ -35,6 +40,7 @@ const deleteRadiografia = (req, res, next) => {
   });
 };
 
+//exporta las funciones
 module.exports = {
   getRadiografias,
   getRadiografiaById,
