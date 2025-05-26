@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+//define la interfaz Pago con sus propiedades
 export interface Pago {
   id_pago?: number;
   id_p_tratamiento: number;
@@ -12,9 +13,14 @@ export interface Pago {
   estado?: 'pendiente' | 'completado' | 'rechazado';
 }
 
+//declara el servicio como inyectable en toda la aplicación
 @Injectable({ providedIn: 'root' })
 export class PagosService {
+
+  //url base del backend para los pagos
   private apiUrl = 'http://localhost:3000/api/pagos';
+
+  //inyecta HttpClient para hacer peticiones HTTP
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Pago[]> {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+//define la interfaz Cita con sus propiedades
 export interface Cita {
   id_cita?: number;
   fecha_hora: string;
@@ -12,13 +13,14 @@ export interface Cita {
   observaciones?: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+//declara el servicio como inyectable en toda la aplicación
+@Injectable({providedIn: 'root'})
 export class CitaService {
 
+  //url base del backend para las citas
   private apiUrl = 'http://localhost:3000/api/citas';
 
+  //inyecta HttpClient para hacer peticiones HTTP
   constructor(private http: HttpClient) {}
 
   getCitas(): Observable<Cita[]> {

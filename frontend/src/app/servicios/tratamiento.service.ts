@@ -2,17 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+//define la interfaz Tratamiento con sus propiedades
 export interface Tratamiento {
-  id_tratamiento?: number;
+  id_tratamiento: number;
   nombre: string;
-  descripcion?: string;
-  derecho?: number;
-  costo_base?: number;
+  descripcion: string;
+  costo_estimado: number;
+  duracion_aproximada_dias?: number;
+  fecha_creacion?: Date;
+  fecha_actualizacion?: Date;
 }
 
+//declara el servicio como inyectable en toda la aplicación
 @Injectable({ providedIn: 'root' })
 export class TratamientoService {
+
+  //url base del backend para los tratamientos
   private apiUrl = 'http://localhost:3000/api/tratamientos';
+
+  //inyecta HttpClient para hacer peticiones HTTP
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Tratamiento[]> {
