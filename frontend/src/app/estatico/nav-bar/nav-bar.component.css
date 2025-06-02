@@ -1,0 +1,134 @@
+
+:root {
+  --primary: #80deea;         /* Celeste claro principal */
+  --primary-dark: #26c6da;     /* Celeste más fuerte para hover o acentos */
+  --secondary: #00796b;        /* Verde oscuro (acento alternativo) */
+  --text: #004d40;             /* Color para texto principal */
+  --light: #f0fdfa;            /* Fondo muy suave */
+  --white: #ffffff;            /* Blanco clásico */
+}
+
+/*  Barra superior fija con sombra */
+.navbar {
+  background-color: var(--white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+  position: sticky;   /* Fija al hacer scroll */
+  top: 0;
+  z-index: 1000;      /* Se mantiene encima de otros elementos */
+}
+
+/*  Contenedor central del navbar */
+.navbar-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Espacia logo y links */
+}
+
+/* Agrupación del logo e ícono */
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+/*  Ícono del diente */
+.icon-logo {
+  font-size: 1.8rem;
+  color: var(--primary-dark);
+  margin-right: 0.5rem;
+}
+
+/*  Estilo del texto "DentalCare" */
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #01579b; /* Azul profundo tipo institucional */
+}
+
+/*  Parte destacada del logo */
+.logo-text span {
+  color: #00acc1; /* Celeste para contraste */
+}
+
+/*  Estilos de los enlaces del menú */
+.navbar-links a {
+  margin: 0 1rem;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  color: #01579b;
+}
+
+/*  Efecto hover en enlaces */
+.navbar-links a:hover {
+  color: var(--primary-dark);
+}
+
+/*  Botón de llamada a la acción ("Reservar cita") */
+.cta-button {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px; /* Forma de píldora */
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+/*  Hover en botón */
+.cta-button:hover {
+  background-color: var(--primary-dark);
+}
+
+/*  Botón hamburguesa para abrir menú en celular */
+.mobile-menu-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--primary-dark);
+}
+
+/*  Contenedor del menú desplegable celular */
+.mobile {
+  display: none;
+  flex-direction: column;
+  padding: 1rem 2rem;
+}
+
+/*  Enlaces del menú celular */
+.mobile a {
+  padding: 0.6rem 0;
+  text-decoration: none;
+  color: var(--text);
+}
+
+/*  Botón dentro del menú celular */
+.cta-button.full {
+  margin-top: 1rem;
+  display: inline-block;
+  text-align: center;
+}
+
+/*  Estilos responsive */
+@media (max-width: 768px) {
+  .desktop {
+    display: none; /* Oculta elementos con clase .desktop en celulares */
+  }
+
+  .mobile-menu-button {
+    display: block; /* Muestra el botón hamburguesa */
+  }
+
+  .mobile.show {
+    display: flex;  /* Muestra el menú al activarlo con JavaScript */
+  }
+}
+
+/*  Tipografía general del sitio */
+* {
+  font-family: 'Poppins', sans-serif;
+}
