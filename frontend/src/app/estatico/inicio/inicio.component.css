@@ -1,0 +1,136 @@
+.hero-section {
+  background: linear-gradient(to right, #003c6c, #00acc1);
+  color: white;
+  padding: 80px 20px;
+}
+
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+  }
+
+  .text-column, .image-column {
+    flex: 1;
+    padding: 20px;
+  }
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.primary-btn {
+  background-color: #00acc1;
+  color: white;
+}
+
+.secondary-btn {
+  background-color: white;
+  color: #0077c2;
+}
+
+.image-column img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+
+.info-cards-section {
+  background-color: #fff;
+  padding: 60px 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.info-cards-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .info-cards-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.info-card {
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
+}
+
+.icon {
+  color: #0077c2;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.info-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #003c6c;
+}
+
+.info-card p {
+  margin: 0;
+  color: #374151;
+  font-size: 15px;
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
