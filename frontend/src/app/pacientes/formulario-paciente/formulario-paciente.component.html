@@ -1,3 +1,106 @@
 <app-nav-bar></app-nav-bar>
 
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="form-header">
+                <h1 class="form-title">Registrar Nuevo Paciente</h1>
+                <p class="form-subtitle">Complete la información del paciente</p>
+            </div>
+            
+            <form class="patient-form">
+                <!-- Fila 1: Nombre y Apellido -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input 
+                            type="text" 
+                            id="nombre" 
+                            name="nombre" 
+                            class="form-input"
+                            placeholder="Nombre"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input 
+                            type="text" 
+                            id="apellido" 
+                            name="apellido" 
+                            class="form-input"
+                            placeholder="Apellido"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Fila 2: Fecha de Nacimiento y Teléfono -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fecha" class="form-label">Fecha de Nacimiento</label>
+                        <input 
+                            type="date" 
+                            id="fecha" 
+                            name="fecha" 
+                            class="form-input"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input 
+                            type="tel" 
+                            id="telefono" 
+                            name="telefono" 
+                            class="form-input"
+                            placeholder="+1 (555) 123-4567"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Fila 3: Email (ancho completo) -->
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input"
+                            placeholder="ejemplo@correo.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Fila 4: Dirección (ancho completo) -->
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input 
+                            type="text" 
+                            id="direccion" 
+                            name="direccion" 
+                            class="form-input"
+                            placeholder="Calle, número, ciudad, código postal"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Registrar Paciente</span>
+                        <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
 <app-footer></app-footer>

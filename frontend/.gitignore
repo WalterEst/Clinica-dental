@@ -6,6 +6,10 @@
 /out-tsc
 /bazel-out
 
+# Archivos
+clinica_dental.sql
+Proyecto_Clinica_Dental.docx
+
 # Node
 /node_modules
 npm-debug.log
