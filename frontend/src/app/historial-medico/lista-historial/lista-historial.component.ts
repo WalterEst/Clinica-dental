@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-lista-historial',
-  imports: [],
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './lista-historial.component.html',
   styleUrl: './lista-historial.component.css'
 })

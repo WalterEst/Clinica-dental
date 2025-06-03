@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-lista-paciente',
-  imports: [],
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './lista-paciente.component.html',
-  styleUrl: './lista-paciente.component.css'
+  styleUrls: ['./lista-paciente.component.css']
 })
 export class ListaPacienteComponent {
 

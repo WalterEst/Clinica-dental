@@ -1,3 +1,43 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './auth/login/login.component';
+import { InicioComponent } from './estatico/inicio/inicio.component';
+import { FormularioCitaComponent } from './citas/formulario-cita/formulario-cita.component';
+import { ListaCitasComponent } from './citas/lista-citas/lista-citas.component';
+import { FormularioHistorialComponent } from './historial-medico/formulario-historial/formulario-historial.component';
+import { ListaHistorialComponent } from './historial-medico/lista-historial/lista-historial.component';
+import { FormularioAsignacionComponent } from './paciente-tratamientos/formulario-asignacion/formulario-asignacion.component';
+import { ListaAsignacionesComponent } from './paciente-tratamientos/lista-asignaciones/lista-asignaciones.component';
+import { DetallePacienteComponent } from './pacientes/detalle-paciente/detalle-paciente.component';
+import { FormularioPacienteComponent } from './pacientes/formulario-paciente/formulario-paciente.component';
+import { ListaPacienteComponent } from './pacientes/lista-paciente/lista-paciente.component';
+import { ListaPagosComponent } from './pagos/lista-pagos/lista-pagos.component';
+import { ResumenPagosComponent } from './pagos/resumen-pagos/resumen-pagos.component';
+import { FormularioPersonalComponent } from './personal/formulario-personal/formulario-personal.component';
+import { ListaPersonalComponent } from './personal/lista-personal/lista-personal.component';
+import { ListaRadiografiasComponent } from './radiografias/lista-radiografias/lista-radiografias.component';
+import { SubirRadiografiaComponent } from './radiografias/subir-radiografia/subir-radiografia.component';
+import { FormularioTratamientoComponent } from './tratamientos/formulario-tratamiento/formulario-tratamiento.component';
+import { ListaTratamientosComponent } from './tratamientos/lista-tratamientos/lista-tratamientos.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  { path: 'auth/login', component: LoginComponent },
+  { path: 'inicio', component: InicioComponent },
+  { path: 'formulario-cita', component: FormularioCitaComponent },
+  { path: 'lista-citas', component: ListaCitasComponent },
+  { path: 'formulario-historial', component: FormularioHistorialComponent },
+  { path: 'lista-historial', component: ListaHistorialComponent },
+  { path: 'formulario-asignacion', component: FormularioAsignacionComponent },
+  { path: 'lista-asignaciones', component: ListaAsignacionesComponent },
+  { path: 'detalle-paciente', component: DetallePacienteComponent },
+  { path: 'formulario-paciente', component: FormularioPacienteComponent },
+  { path: 'lista-paciente', component: ListaPacienteComponent },
+  { path: 'lista-pagos', component: ListaPagosComponent },
+  { path: 'resumen-pagos', component: ResumenPagosComponent },
+  { path: 'formulario-personal', component: FormularioPersonalComponent },
+  { path: 'lista-personal', component: ListaPersonalComponent },
+  { path: 'lista-radiografias', component: ListaRadiografiasComponent },
+  { path: 'subir-radiografia', component: SubirRadiografiaComponent },
+  { path: 'formulario-tratamiento', component: FormularioTratamientoComponent },
+  { path: 'lista-tratamientos', component: ListaTratamientosComponent },
+];

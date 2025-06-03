@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-subir-radiografia',
-  imports: [],
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './subir-radiografia.component.html',
   styleUrl: './subir-radiografia.component.css'
 })
