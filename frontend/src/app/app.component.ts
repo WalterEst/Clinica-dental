@@ -13,10 +13,4 @@ import { FooterComponent } from "./estatico/footer/footer.component";
 })
 export class AppComponent {
   title = 'frontend';
-  
-  constructor(public router: Router) {}
-
-  shouldShowLayout(): boolean {
-    return !this.router.url.includes('/login');
-  }
 }
