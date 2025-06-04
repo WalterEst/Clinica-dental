@@ -12,7 +12,6 @@
 .navbar {
   background-color: var(--white);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra sutil */
-  position: sticky;   /* Fija al hacer scroll */
   top: 0;
   z-index: 1000;      /* Se mantiene encima de otros elementos */
 }

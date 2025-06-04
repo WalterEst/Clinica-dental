@@ -1,9 +1,11 @@
 import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common'; // Esta es la función clave
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
+  imports: [RouterModule],
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
