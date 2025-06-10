@@ -20,7 +20,7 @@ import { FormularioTratamientoComponent } from './tratamientos/formulario-tratam
 import { ListaTratamientosComponent } from './tratamientos/lista-tratamientos/lista-tratamientos.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'pacientes/lista-paciente', pathMatch: 'full' },
+  { path: '', redirectTo: 'estatico/inicio', pathMatch: 'full' },
   { path: 'auth/login', component: LoginComponent },
   { path: 'estatico/inicio', component: InicioComponent },
   { path: 'citas/formulario-cita', component: FormularioCitaComponent },
