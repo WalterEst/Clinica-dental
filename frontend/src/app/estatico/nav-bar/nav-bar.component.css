@@ -34,7 +34,7 @@
 
 /*  Ícono del diente */
 .icon-logo {
-  font-size: 1.8rem;
+  width: 7ch;
   color: var(--primary-dark);
   margin-right: 0.5rem;
 }
