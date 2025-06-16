@@ -47,7 +47,38 @@
     min-width: 200px;
 }
 
+.btn-nuevo-ac {
+    text-decoration: none;
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    display: flex;
+    gap: 5px;
+    position: relative;
+    overflow: hidden;
+    width: 40px;
+}
+
 .btn-nuevo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-nuevo-ac::before {
     content: '';
     position: absolute;
     top: 0;
@@ -62,7 +93,19 @@
     left: 100%;
 }
 
+.btn-nuevo-ac:hover::before {
+    left: 100%;
+}
+
 .btn-nuevo:hover {
+  background: linear-gradient(135deg, #00acc1 0%, #003c6c 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+      0 10px 25px -5px rgba(6, 182, 212, 0.4),
+      0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-nuevo-ac:hover {
   background: linear-gradient(135deg, #00acc1 0%, #003c6c 100%);
   transform: translateY(-2px);
   box-shadow: 
@@ -75,7 +118,7 @@
   border-collapse: collapse;
 }
 
-.tabla-pacientes thead {
+.tabla-pacientes thead{
   background-color: #004F85;
   color: white;
 }
@@ -89,4 +132,5 @@
 
 .tabla-pacientes tbody tr:hover {
   background-color: #e0f7fa;
+  cursor: pointer;
 }
