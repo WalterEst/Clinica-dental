@@ -1,9 +1,7 @@
-CREATE DATABASE IF NOT EXISTS clinica;
-USE clinica;
-
 -- Tabla: paciente
 CREATE TABLE paciente (
-  id_paciente CHAR(12) NOT NULL,
+  id_paciente INT NOT NULL AUTO_INCREMENT,
+  rut CHAR(12) NOT NULL,
   nombre VARCHAR(50) NOT NULL,
   apellido VARCHAR(50) NOT NULL,
   fecha_nacimiento DATE DEFAULT NULL,
@@ -34,7 +32,7 @@ CREATE TABLE paciente_tratamiento (
   fecha_fin DATE DEFAULT NULL,
   descripcion TEXT,
   monto_aplicado DECIMAL(10,2) DEFAULT NULL,
-  id_paciente CHAR(12) NOT NULL,
+  id_paciente INT NOT NULL,
   id_tratamiento INT NOT NULL,
   fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id_p_tratamiento),
@@ -52,7 +50,7 @@ CREATE TABLE cita (
   fecha_hora DATETIME NOT NULL,
   duracion_minutos INT NOT NULL DEFAULT 30 COMMENT 'Duración en minutos',
   estado ENUM('programada', 'completada', 'cancelada', 'no_asistio') DEFAULT 'programada',
-  id_paciente CHAR(12) NOT NULL,
+  id_paciente INT NOT NULL,
   id_p_tratamiento INT DEFAULT NULL,
   observaciones TEXT,
   fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -71,7 +69,7 @@ CREATE TABLE cita (
 CREATE TABLE historial_medico (
   id_historial INT NOT NULL AUTO_INCREMENT,
   descripcion TEXT NOT NULL,
-  id_paciente CHAR(12) NOT NULL,
+  id_paciente INT NOT NULL,
   fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id_historial),
   KEY id_paciente (id_paciente),
@@ -121,7 +119,7 @@ CREATE TABLE radiografia (
   tipo VARCHAR(20) DEFAULT NULL,
   archivo VARCHAR(250) DEFAULT NULL COMMENT 'Ruta del archivo o nombre',
   observaciones TEXT,
-  id_paciente CHAR(12) NOT NULL,
+  id_paciente INT NOT NULL,
   fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id_radiografia),
   KEY id_paciente (id_paciente),
@@ -132,8 +130,8 @@ CREATE TABLE radiografia (
 
 -- Tabla: paciente
 INSERT INTO paciente VALUES 
-('11111111-1','Ana','Rojas','1990-05-12','987654321','ana.rojas@gmail.com','Av. Libertad 123','2025-05-17 18:58:00'),
-('22222222-2','Luis','Martínez','1985-09-30','976543210','luis.martinez@gmail.com','Calle Sur 456','2025-05-17 18:58:00');
+(1, '11111111-1','Ana','Rojas','1990-05-12','987654321','ana.rojas@gmail.com','Av. Libertad 123','2025-05-17 18:58:00'),
+(2, '22222222-2','Luis','Martínez','1985-09-30','976543210','luis.martinez@gmail.com','Calle Sur 456','2025-05-17 18:58:00');
 
 -- Tabla: tratamiento
 INSERT INTO tratamiento VALUES 
@@ -142,18 +140,18 @@ INSERT INTO tratamiento VALUES
 
 -- Tabla: paciente_tratamiento
 INSERT INTO paciente_tratamiento VALUES 
-(1,'2025-05-01',NULL,'Limpieza dental preventiva',25000.00,'11111111-1',1,'2025-05-17 18:58:33'),
-(2,'2025-05-03',NULL,'Extracción de molar superior derecha',45000.00,'22222222-2',2,'2025-05-17 18:58:33');
+(1,'2025-05-01',NULL,'Limpieza dental preventiva',25000.00,'1',1,'2025-05-17 18:58:33'),
+(2,'2025-05-03',NULL,'Extracción de molar superior derecha',45000.00,'2',2,'2025-05-17 18:58:33');
 
 -- Tabla: cita
 INSERT INTO cita VALUES 
-(1,'2025-05-20 10:00:00',30,'programada','11111111-1',NULL,'Evaluación inicial sin tratamiento definido','2025-05-17 18:59:41','2025-05-17 18:59:41'),
-(2,'2025-05-21 11:00:00',30,'programada','22222222-2',2,'Control post extracción molar','2025-05-17 18:59:56','2025-05-17 18:59:56');
+(1,'2025-05-20 10:00:00',30,'programada','1',NULL,'Evaluación inicial sin tratamiento definido','2025-05-17 18:59:41','2025-05-17 18:59:41'),
+(2,'2025-05-21 11:00:00',30,'programada','2',2,'Control post extracción molar','2025-05-17 18:59:56','2025-05-17 18:59:56');
 
 -- Tabla: historial_medico
 INSERT INTO historial_medico VALUES 
-(1,'Paciente sin enfermedades sistémicas, sin alergias.','11111111-1','2025-05-17 18:59:20'),
-(2,'Hipertensión controlada, antecedentes familiares de diabetes.','22222222-2','2025-05-17 18:59:20');
+(1,'Paciente sin enfermedades sistémicas, sin alergias.','1','2025-05-17 18:59:20'),
+(2,'Hipertensión controlada, antecedentes familiares de diabetes.','2','2025-05-17 18:59:20');
 
 -- Tabla: pagos
 INSERT INTO pagos VALUES 
@@ -167,5 +165,5 @@ INSERT INTO personal VALUES
 
 -- Tabla: radiografia
 INSERT INTO radiografia VALUES 
-(1,'2025-04-28 09:00:00','panorámica','rad_pano_ana.jpg','Todo normal','11111111-1','2025-05-17 18:59:07'),
-(2,'2025-04-29 14:00:00','bitewing','rad_bite_luis.jpg','Caries visibles','22222222-2','2025-05-17 18:59:07');
+(1,'2025-04-28 09:00:00','panorámica','rad_pano_ana.jpg','Todo normal','1','2025-05-17 18:59:07'),
+(2,'2025-04-29 14:00:00','bitewing','rad_bite_luis.jpg','Caries visibles','2','2025-05-17 18:59:07');
