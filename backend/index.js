@@ -20,7 +20,7 @@ app.use('/api/personal', require('./routes/personalRoutes'));
 app.use('/api/radiografias', require('./routes/radiografiaRoutes'));
 
 // ruta login
-app.use('/api/auth', require('./routes/loginRoutes'));
+// app.use('/api/auth', require('./routes/loginRoutes'));
 
 // middleware de errores
 app.use(errorHandler);

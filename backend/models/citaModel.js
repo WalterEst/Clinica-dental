@@ -3,7 +3,14 @@ const db = require('../config/database');
 //define Cita con funciones para interactuar con cita en la base de datos
 const Cita = {
   getAll: (callback) => {
-    db.query('SELECT * FROM cita', callback);
+    const sql = `
+      SELECT c.*, 
+             CONCAT(p.nombre, ' ', p.apellido) AS nombre_paciente, 
+             p.id_paciente AS rut_paciente
+      FROM cita c
+      JOIN paciente p ON c.id_paciente = p.id_paciente
+    `;
+    db.query(sql, callback);
   },
   getById: (id, callback) => {
     db.query('SELECT * FROM cita WHERE id_cita = ?', [id], callback);

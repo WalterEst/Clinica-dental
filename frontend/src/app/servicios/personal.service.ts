@@ -33,15 +33,19 @@ export class PersonalService {
     return this.http.get<Personal>(`${this.apiUrl}/${id}`);
   }
 
-  create(data: Personal): Observable<Personal> {
-    return this.http.post<Personal>(this.apiUrl, data);
+  createPersonal(personal: Personal): Observable<any> {
+    return this.http.post(this.apiUrl, personal);
   }
-
   update(id: number, data: Personal): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, data);
   }
 
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  // Nuevo método para obtener solo los doctores
+  getDoctores(): Observable<Personal[]> {
+    return this.http.get<Personal[]>(`${this.apiUrl}/doctores`);
   }
 }

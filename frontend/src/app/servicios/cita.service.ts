@@ -11,7 +11,14 @@ export interface Cita {
   id_paciente: string;
   id_p_tratamiento?: number | null;
   observaciones?: string;
+
+  // propiedades que vienen del JOIN con paciente
+  rut_paciente?: string;
+  nombre_paciente?: string;
+
+  id_personal?: number;
 }
+
 
 //declara el servicio como inyectable en toda la aplicación
 @Injectable({providedIn: 'root'})
