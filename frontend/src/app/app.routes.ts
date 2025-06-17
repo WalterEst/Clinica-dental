@@ -18,6 +18,7 @@ import { ListaRadiografiasComponent } from './radiografias/lista-radiografias/li
 import { SubirRadiografiaComponent } from './radiografias/subir-radiografia/subir-radiografia.component';
 import { FormularioTratamientoComponent } from './tratamientos/formulario-tratamiento/formulario-tratamiento.component';
 import { ListaTratamientosComponent } from './tratamientos/lista-tratamientos/lista-tratamientos.component';
+import { IngresarPagoComponent } from './pagos/ingresar-pago/ingresar-pago.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'estatico/inicio', pathMatch: 'full' },
@@ -40,4 +41,5 @@ export const routes: Routes = [
   { path: 'radiografias/subir-radiografia', component: SubirRadiografiaComponent },
   { path: 'tratamientos/formulario-tratamiento', component: FormularioTratamientoComponent },
   { path: 'tratamientos/lista-tratamientos', component: ListaTratamientosComponent },
+  {path: 'pagos/ingresar-pago', component: IngresarPagoComponent}
 ];
