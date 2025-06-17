@@ -1,0 +1,484 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-white p-4">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Centro de Pagos</h1>
+      <p class="text-gray-600">Clínica Dental Sonrisa Perfecta</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+      <div class="flex">
+        <div class="text-red-400">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm text-red-700">{{ error }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="mb-8" *ngIf="!isLoading">
+      <div class="flex items-center justify-between max-w-3xl mx-auto">
+        <div *ngFor="let step of steps; let i = index" class="flex items-center">
+          <div class="flex flex-col items-center">
+            <div [class]="'w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ' + 
+                         (isStepCompleted(step.id) ? 'bg-blue-600 text-white' : 
+                          isStepActive(step.id) ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600')">
+              <svg *ngIf="isStepCompleted(step.id)" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span *ngIf="!isStepCompleted(step.id)">{{ step.id }}</span>
+            </div>
+            <div class="mt-2 text-center">
+              <p class="text-sm font-medium text-gray-900">{{ step.title }}</p>
+              <p class="text-xs text-gray-500">{{ step.description }}</p>
+            </div>
+          </div>
+          <svg *ngIf="i < steps.length - 1" class="w-5 h-5 text-gray-400 mx-4 mt-[-40px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8" *ngIf="!isLoading">
+      <!-- Main Payment Form -->
+      <div class="lg:col-span-2">
+        
+        <!-- Step 1: Select Treatment -->
+        <div *ngIf="currentStep === 1" class="bg-white rounded-lg shadow-sm border p-6">
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">Selecciona tu Tratamiento</h2>
+            <p class="text-gray-600">Elige el plan que mejor se adapte a tus necesidades</p>
+          </div>
+
+          <form [formGroup]="treatmentForm" class="space-y-4">
+            <div *ngFor="let treatment of treatments" class="relative">
+              <input 
+                type="radio" 
+                [id]="treatment.id" 
+                [value]="treatment.id"
+                formControlName="treatmentId"
+                class="peer sr-only">
+              <label 
+                [for]="treatment.id"
+                class="flex items-center justify-between p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-semibold text-gray-900">{{ treatment.name }}</h3>
+                    <div class="flex items-center gap-2">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                        </svg>
+                        {{ treatment.cashbackPercentage }}% Cashback
+                      </span>
+                      <span class="text-xl font-bold text-blue-600">{{ formatPrice(treatment.price) }}</span>
+                    </div>
+                  </div>
+                  <p class="text-gray-600 text-sm">{{ treatment.description }}</p>
+                </div>
+              </label>
+            </div>
+          </form>
+
+          <button 
+            (click)="nextStep()"
+            [disabled]="!treatmentForm.valid"
+            class="w-full mt-6 bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+            Continuar al Pago
+          </button>
+        </div>
+
+        <!-- Step 2: Payment Method -->
+        <div *ngIf="currentStep === 2" class="bg-white rounded-lg shadow-sm border p-6">
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">Método de Pago</h2>
+            <p class="text-gray-600">Selecciona tu método de pago preferido</p>
+          </div>
+
+          <form [formGroup]="paymentMethodForm" class="space-y-4">
+            <div *ngFor="let method of paymentMethods" class="relative">
+              <input 
+                type="radio" 
+                [id]="method.id" 
+                [value]="method.type"
+                formControlName="paymentMethod"
+                class="peer sr-only">
+              <label 
+                [for]="method.id"
+                class="flex items-center justify-between p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
+                <div class="flex items-center gap-3">
+                  <div [class]="'w-6 h-6 ' + (method.type === 'card' ? 'text-blue-600' : method.type === 'transfer' ? 'text-green-600' : 'text-purple-600')">
+                    <svg *ngIf="method.type === 'card'" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
+                    </svg>
+                    <svg *ngIf="method.type === 'transfer'" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm3 1h6v4H7V5zm8 8v2a1 1 0 01-1 1H6a1 1 0 01-1-1v-2h10z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg *ngIf="method.type === 'mobile'" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zM6 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm2 4a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-medium">{{ method.name }}</p>
+                    <p class="text-sm text-gray-500">{{ method.description }}</p>
+                  </div>
+                </div>
+                <span *ngIf="method.discount" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">
+                  {{ method.discount }}% Descuento
+                </span>
+                <span *ngIf="!method.discount" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                  {{ method.type === 'card' ? 'Inmediato' : method.type === 'mobile' ? 'Rápido' : 'Seguro' }}
+                </span>
+              </label>
+            </div>
+          </form>
+
+          <div class="flex gap-3 mt-6">
+            <button 
+              (click)="previousStep()"
+              class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+              Volver
+            </button>
+            <button 
+              (click)="nextStep()"
+              [disabled]="!paymentMethodForm.valid"
+              class="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+              Continuar
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Payment Details -->
+        <div *ngIf="currentStep === 3" class="bg-white rounded-lg shadow-sm border p-6">
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">Información de Pago</h2>
+            <p class="text-gray-600">Completa los datos para procesar tu pago</p>
+          </div>
+
+          <!-- Payment Details Form -->
+          <form [formGroup]="paymentDetailsForm" class="space-y-4 mb-6">
+            <!-- Card Payment -->
+            <div *ngIf="paymentMethodForm.get('paymentMethod')?.value === 'card'">
+              <div class="grid gap-4">
+                <div>
+                  <label for="cardName" class="block text-sm font-medium text-gray-700 mb-1">Nombre del titular</label>
+                  <input 
+                    id="cardName" 
+                    formControlName="cardName"
+                    placeholder="Como aparece en la tarjeta"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                  <label for="cardNumber" class="block text-sm font-medium text-gray-700 mb-1">Número de tarjeta</label>
+                  <input 
+                    id="cardNumber" 
+                    formControlName="cardNumber"
+                    placeholder="1234 5678 9012 3456"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                  <div>
+                    <label for="expiryMonth" class="block text-sm font-medium text-gray-700 mb-1">Mes</label>
+                    <select 
+                      id="expiryMonth" 
+                      formControlName="expiryMonth"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <option value="">MM</option>
+                      <option *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="month.toString().padStart(2, '0')">
+                        {{ month.toString().padStart(2, '0') }}
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="expiryYear" class="block text-sm font-medium text-gray-700 mb-1">Año</label>
+                    <select 
+                      id="expiryYear" 
+                      formControlName="expiryYear"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <option value="">YYYY</option>
+                      <option *ngFor="let year of [2024,2025,2026,2027,2028,2029,2030,2031,2032,2033]" [value]="year">
+                        {{ year }}
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="cvc" class="block text-sm font-medium text-gray-700 mb-1">CVC</label>
+                    <input 
+                      id="cvc" 
+                      formControlName="cvc"
+                      placeholder="123"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transfer Payment -->
+            <div *ngIf="paymentMethodForm.get('paymentMethod')?.value === 'transfer'">
+              <div class="grid gap-4">
+                <div>
+                  <label for="bank" class="block text-sm font-medium text-gray-700 mb-1">Selecciona tu banco</label>
+                  <select 
+                    id="bank" 
+                    formControlName="bank"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Elige tu banco</option>
+                    <option value="bancolombia">Bancolombia</option>
+                    <option value="davivienda">Davivienda</option>
+                    <option value="bbva">BBVA</option>
+                    <option value="pse">PSE</option>
+                    <option value="banco-bogota">Banco de Bogotá</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="accountType" class="block text-sm font-medium text-gray-700 mb-1">Tipo de cuenta</label>
+                  <select 
+                    id="accountType" 
+                    formControlName="accountType"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Selecciona el tipo</option>
+                    <option value="ahorros">Cuenta de Ahorros</option>
+                    <option value="corriente">Cuenta Corriente</option>
+                  </select>
+                </div>
+                <div class="p-4 bg-blue-50 rounded-lg">
+                  <div class="flex items-center gap-2 mb-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <p class="font-medium text-blue-900">Transferencia Segura</p>
+                  </div>
+                  <p class="text-sm text-blue-700">
+                    Serás redirigido al portal seguro de tu banco para completar la transferencia.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Payment -->
+            <div *ngIf="paymentMethodForm.get('paymentMethod')?.value === 'mobile'">
+              <div class="grid gap-4">
+                <div>
+                  <label for="mobileApp" class="block text-sm font-medium text-gray-700 mb-1">Aplicación móvil</label>
+                  <select 
+                    id="mobileApp" 
+                    formControlName="mobileApp"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Selecciona la app</option>
+                    <option value="nequi">Nequi</option>
+                    <option value="daviplata">Daviplata</option>
+                    <option value="tpaga">Tpaga</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="mobilePhone" class="block text-sm font-medium text-gray-700 mb-1">Número de celular</label>
+                  <input 
+                    id="mobilePhone" 
+                    formControlName="mobilePhone"
+                    placeholder="300 123 4567"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <hr class="my-6">
+
+          <!-- Patient Information -->
+          <form [formGroup]="patientForm" class="space-y-4">
+            <h3 class="font-semibold text-gray-900 mb-4">Información del paciente</h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">Nombres</label>
+                <input 
+                  id="firstName" 
+                  formControlName="firstName"
+                  placeholder="Juan Carlos"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+              <div>
+                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+                <input 
+                  id="lastName" 
+                  formControlName="lastName"
+                  placeholder="García López"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+              <input 
+                id="email" 
+                type="email"
+                formControlName="email"
+                placeholder="juan@ejemplo.com"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+              <input 
+                id="phone" 
+                formControlName="phone"
+                placeholder="300 123 4567"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+              <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notas adicionales (opcional)</label>
+              <textarea 
+                id="notes" 
+                formControlName="notes"
+                rows="3"
+                placeholder="Información adicional sobre el tratamiento..."
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+            </div>
+          </form>
+
+          <div class="flex gap-3 mt-6">
+            <button 
+              (click)="previousStep()"
+              class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+              Volver
+            </button>
+            <button 
+              (click)="nextStep()"
+              [disabled]="!paymentDetailsForm.valid || !patientForm.valid"
+              class="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+              Revisar Pago
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Confirmation -->
+        <div *ngIf="currentStep === 4" class="bg-white rounded-lg shadow-sm border p-6">
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">Confirmar Pago</h2>
+            <p class="text-gray-600">Revisa los detalles antes de procesar el pago</p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="p-4 bg-gray-50 rounded-lg">
+              <h3 class="font-semibold mb-2">Resumen del tratamiento</h3>
+              <div *ngIf="selectedTreatment">
+                <p class="font-medium">{{ selectedTreatment.name }}</p>
+                <p class="text-sm text-gray-600">{{ selectedTreatment.description }}</p>
+              </div>
+            </div>
+
+            <div class="p-4 bg-green-50 rounded-lg">
+              <div class="flex items-center gap-2 mb-2">
+                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                </svg>
+                <h3 class="font-semibold text-green-900">Beneficios incluidos</h3>
+              </div>
+              <ul class="text-sm text-green-700 space-y-1">
+                <li *ngIf="selectedTreatment">• {{ selectedTreatment.cashbackPercentage }}% de cashback en tu próxima cita</li>
+                <li>• Garantía de 6 meses en el tratamiento</li>
+                <li>• Seguimiento post-tratamiento gratuito</li>
+                <li *ngIf="paymentMethodForm.get('paymentMethod')?.value === 'transfer'">• 5% de descuento por transferencia bancaria</li>
+              </ul>
+            </div>
+
+            <div class="flex gap-3">
+              <button 
+                (click)="previousStep()"
+                class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+                Volver
+              </button>
+              <button 
+                (click)="processPayment()"
+                [disabled]="isLoading"
+                class="flex-1 bg-green-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                <span *ngIf="!isLoading">Procesar Pago Seguro</span>
+                <span *ngIf="isLoading">Procesando...</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Sidebar -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-lg shadow-sm border p-6 sticky top-4">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Resumen del Pago</h3>
+          
+          <div *ngIf="selectedTreatment; else noTreatmentSelected" class="space-y-4">
+            <div>
+              <p class="font-medium">{{ selectedTreatment.name }}</p>
+              <p class="text-sm text-gray-600">{{ selectedTreatment.description }}</p>
+            </div>
+
+            <hr>
+
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span>Subtotal:</span>
+                <span>{{ formatPrice(subtotal) }}</span>
+              </div>
+              <div *ngIf="discountAmount > 0" class="flex justify-between text-green-600">
+                <span>Descuento:</span>
+                <span>-{{ formatPrice(discountAmount) }}</span>
+              </div>
+              <div class="flex justify-between font-bold text-lg">
+                <span>Total:</span>
+                <span>{{ formatPrice(totalAmount) }}</span>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-green-600">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-sm">Cashback: {{ selectedTreatment.cashbackPercentage }}%</span>
+              </div>
+              <div class="flex items-center gap-2 text-blue-600">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-sm">Pago 100% seguro</span>
+              </div>
+              <div class="flex items-center gap-2 text-gray-600">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-sm">Procesamiento inmediato</span>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #noTreatmentSelected>
+            <p class="text-gray-500 text-center py-8">Selecciona un tratamiento para ver el resumen</p>
+          </ng-template>
+        </div>
+
+        <!-- Security Info -->
+        <div class="bg-white rounded-lg shadow-sm border p-6 mt-4">
+          <div class="text-center space-y-2">
+            <svg class="w-8 h-8 text-green-600 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+            <h3 class="font-semibold">Pago Seguro</h3>
+            <p class="text-sm text-gray-600">Tus datos están protegidos con encriptación SSL de 256 bits</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

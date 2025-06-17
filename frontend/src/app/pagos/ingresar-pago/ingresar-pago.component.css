@@ -1,0 +1,85 @@
+.ingresar-pago {
+  
+  .treatment-card {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  .payment-method-card {
+    transition: all 0.2s ease-in-out;
+    
+    &.selected {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+  }
+  
+  .step-indicator {
+    transition: all 0.3s ease-in-out;
+    
+    &.completed {
+      background-color: #3b82f6;
+      color: white;
+    }
+    
+    &.active {
+      background-color: #3b82f6;
+      color: white;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+  }
+  
+  .form-input {
+    transition: border-color 0.2s ease-in-out;
+    
+    &:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    &.error {
+      border-color: #ef4444;
+      
+      &:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+  }
+  
+  .loading-spinner {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .ingresar-pago {
+    .step-indicator {
+      .step-title {
+        font-size: 0.75rem;
+      }
+      
+      .step-description {
+        display: none;
+      }
+    }
+    
+    .payment-summary {
+      position: static;
+      margin-top: 2rem;
+    }
+  }
+}
