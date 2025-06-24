@@ -7,15 +7,16 @@
                 <p class="form-subtitle">Complete la información del paciente</p>
             </div>
             
-            <form class="patient-form">
+            <form class="patient-form" [formGroup]="formulario" (ngSubmit)="onSubmit()">
                 <!-- Fila 1: Nombre y Apellido -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input 
-                            type="text" 
-                            id="nombre" 
-                            name="nombre" 
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            formControlName="nombre"
                             class="form-input"
                             placeholder="Nombre"
                             required
@@ -23,10 +24,11 @@
                     </div>
                     <div class="form-group">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input 
-                            type="text" 
-                            id="apellido" 
-                            name="apellido" 
+                        <input
+                            type="text"
+                            id="apellido"
+                            name="apellido"
+                            formControlName="apellido"
                             class="form-input"
                             placeholder="Apellido"
                             required
@@ -38,20 +40,22 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="fecha" class="form-label">Fecha de Nacimiento</label>
-                        <input 
-                            type="date" 
-                            id="fecha" 
-                            name="fecha" 
+                        <input
+                            type="date"
+                            id="fecha"
+                            name="fecha"
+                            formControlName="fecha_nacimiento"
                             class="form-input"
                             required
                         >
                     </div>
                     <div class="form-group">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input 
-                            type="tel" 
-                            id="telefono" 
-                            name="telefono" 
+                        <input
+                            type="tel"
+                            id="telefono"
+                            name="telefono"
+                            formControlName="telefono"
                             class="form-input"
                             placeholder="+1 (555) 123-4567"
                             required
@@ -63,10 +67,11 @@
                 <div class="form-row">
                     <div class="form-group full-width">
                         <label for="email" class="form-label">Correo Electrónico</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            formControlName="email"
                             class="form-input"
                             placeholder="ejemplo@correo.com"
                             required
@@ -78,10 +83,11 @@
                 <div class="form-row">
                     <div class="form-group full-width">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <input 
-                            type="text" 
-                            id="direccion" 
-                            name="direccion" 
+                        <input
+                            type="text"
+                            id="direccion"
+                            name="direccion"
+                            formControlName="direccion"
                             class="form-input"
                             placeholder="Calle, número, ciudad, código postal"
                             required
