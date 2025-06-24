@@ -11,20 +11,19 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             class="form-input"
-                            placeholder="Nombre"
+                            [value]="paciente?.nombre"
                             disabled
-                            
                         >
                     </div>
                     <div class="form-group">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             class="form-input"
-                            placeholder="Apellido"
+                            [value]="paciente?.apellido"
                             disabled
                         >
                     </div>
@@ -33,19 +32,19 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="fecha" class="form-label">Fecha de Nacimiento</label>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             class="form-input"
-                            placeholder="12-05-1954"
+                            [value]="paciente?.fecha_nacimiento"
                             disabled
                         >
                     </div>
                     <div class="form-group">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input 
-                            type="tel" 
+                        <input
+                            type="tel"
                             class="form-input"
-                            placeholder="+1 (555) 123-4567"
+                            [value]="paciente?.telefono"
                             disabled
                         >
                     </div>
@@ -54,10 +53,10 @@
                 <div class="form-row">
                     <div class="form-group full-width">
                         <label for="email" class="form-label">Correo Electrónico</label>
-                        <input 
-                            type="email" 
+                        <input
+                            type="email"
                             class="form-input"
-                            placeholder="ejemplo@correo.com"
+                            [value]="paciente?.email"
                             disabled
                         >
                     </div>
@@ -66,10 +65,10 @@
                 <div class="form-row">
                     <div class="form-group full-width">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             class="form-input"
-                            placeholder="Calle, número, ciudad, código postal"
+                            [value]="paciente?.direccion"
                             disabled
                         >
                     </div>

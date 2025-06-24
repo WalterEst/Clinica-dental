@@ -32,7 +32,7 @@ export const routes: Routes = [
   { path: 'historial-medico/formulario-historial', component: FormularioHistorialComponent},
   { path: 'paciente-tratamientos/formulario-asignacion', component: FormularioAsignacionComponent },
   { path: 'paciente-tratamientos/lista-asignaciones', component: ListaAsignacionesComponent },
-  { path: 'pacientes/detalle-paciente', component: DetallePacienteComponent },
+  { path: 'pacientes/detalle-paciente/:id', component: DetallePacienteComponent },
   { path: 'pacientes/formulario-paciente', component: FormularioPacienteComponent },
   { path: 'pacientes/lista-paciente', component: ListaPacienteComponent },
   { path: 'pagos/lista-pagos', component: ListaPagosComponent },
