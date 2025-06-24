@@ -19,4 +19,12 @@
       </div>
     </div>
   </div>
+
+  <form (ngSubmit)="agregarHistorial()" class="mt-4">
+    <div class="mb-3">
+      <label for="nuevoHistorial" class="form-label fw-bold">Nuevo Registro</label>
+      <textarea id="nuevoHistorial" class="form-control" [(ngModel)]="nuevoHistorial" name="nuevoHistorial" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar Historial</button>
+  </form>
 </div>

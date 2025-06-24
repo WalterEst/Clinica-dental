@@ -17,6 +17,14 @@ const getHistorialById = (req, res, next) => {
   });
 };
 
+//obtiene historial medico de un paciente
+const getHistorialByPaciente = (req, res, next) => {
+  Historial.getByPaciente(req.params.id, (err, data) => {
+    if (err) return next(new Error('Error al obtener historial del paciente'));
+    res.json(data);
+  });
+};
+
 //crea un nuevo historial medico
 const createHistorial = (req, res, next) => {
   Historial.create(req.body, (err, result) => {
@@ -46,6 +54,7 @@ const deleteHistorial = (req, res, next) => {
 module.exports = {
   getHistoriales,
   getHistorialById,
+  getHistorialByPaciente,
   createHistorial,
   updateHistorial,
   deleteHistorial
