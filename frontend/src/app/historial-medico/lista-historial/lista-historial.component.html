@@ -1,1 +1,16 @@
-<p>lista-historial works!</p>
+<table class="tabla">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Descripción</th>
+      <th>ID Paciente</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let h of historiales">
+      <td>{{ h.id_historial }}</td>
+      <td>{{ h.descripcion }}</td>
+      <td>{{ h.id_paciente }}</td>
+    </tr>
+  </tbody>
+</table>
