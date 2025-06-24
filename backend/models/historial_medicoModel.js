@@ -8,6 +8,9 @@ const HistorialMedico = {
   getById: (id, callback) => {
     db.query('SELECT * FROM historial_medico WHERE id_historial = ?', [id], callback);
   },
+  getByPaciente: (idPaciente, callback) => {
+    db.query('SELECT * FROM historial_medico WHERE id_paciente = ?', [idPaciente], callback);
+  },
   create: (historial, callback) => {
     db.query('INSERT INTO historial_medico SET ?', historial, callback);
   },

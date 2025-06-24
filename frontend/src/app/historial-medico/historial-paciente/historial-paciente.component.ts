@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { NavBarComponent } from "../../estatico/nav-bar/nav-bar.component";
 import { FooterComponent } from "../../estatico/footer/footer.component";
 import { HistorialMedicoService, HistorialMedico } from '../../servicios/historial.service';
@@ -8,13 +9,14 @@ import { HistorialMedicoService, HistorialMedico } from '../../servicios/histori
 @Component({
   selector: 'app-historial-paciente',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './historial-paciente.component.html',
   styleUrls: ['./historial-paciente.component.css']
 })
 export class HistorialPacienteComponent implements OnInit {
   idPaciente!: number;
   historial: HistorialMedico[] = [];
+  nuevoHistorial = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +34,23 @@ export class HistorialPacienteComponent implements OnInit {
     this.historialService.getByPaciente(this.idPaciente).subscribe({
       next: (data) => this.historial = data,
       error: (err) => console.error('Error al cargar historial médico', err)
+    });
+  }
+
+  agregarHistorial(): void {
+    if (!this.nuevoHistorial.trim()) return;
+
+    const datos: HistorialMedico = {
+      descripcion: this.nuevoHistorial,
+      id_paciente: String(this.idPaciente)
+    };
+
+    this.historialService.create(datos).subscribe({
+      next: () => {
+        this.nuevoHistorial = '';
+        this.cargarHistorial();
+      },
+      error: err => console.error('Error al crear historial', err)
     });
   }
 }
