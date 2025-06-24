@@ -1,0 +1,59 @@
+.historial-container {
+    padding: 20px;
+    background-color: #f2f6fc;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.1);
+    margin: auto;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+}
+
+.titulo-historial {
+    margin-bottom: 2rem;
+    font-weight: bold;
+    font-size: 2rem;
+    color: #01579b;
+    text-align: center;
+}
+
+.registro-card {
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in;
+}
+
+.registro-card .card-header {
+    background: linear-gradient(to right, #003c6c, #0077c2);
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.texto-historial {
+    resize: none;
+    background-color: #f0f4f8;
+    border: 1px solid #cfd8dc;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 1rem;
+    color: #37474f;
+}
+
+.fecha-actualizacion {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #607d8b;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

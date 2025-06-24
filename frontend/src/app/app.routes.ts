@@ -3,8 +3,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { InicioComponent } from './estatico/inicio/inicio.component';
 import { FormularioCitaComponent } from './citas/formulario-cita/formulario-cita.component';
 import { ListaCitasComponent } from './citas/lista-citas/lista-citas.component';
+import { HistorialPacienteComponent } from './historial-medico/historial-paciente/historial-paciente.component';
+import { AgregarHistorialComponent } from './historial-medico/agregar-historial/agregar-historial.component';
 import { FormularioHistorialComponent } from './historial-medico/formulario-historial/formulario-historial.component';
-import { ListaHistorialComponent } from './historial-medico/lista-historial/lista-historial.component';
 import { FormularioAsignacionComponent } from './paciente-tratamientos/formulario-asignacion/formulario-asignacion.component';
 import { ListaAsignacionesComponent } from './paciente-tratamientos/lista-asignaciones/lista-asignaciones.component';
 import { DetallePacienteComponent } from './pacientes/detalle-paciente/detalle-paciente.component';
@@ -26,8 +27,9 @@ export const routes: Routes = [
   { path: 'estatico/inicio', component: InicioComponent },
   { path: 'citas/formulario-cita', component: FormularioCitaComponent },
   { path: 'citas/lista-citas', component: ListaCitasComponent },
-  { path: 'historial-medico/formulario-historial', component: FormularioHistorialComponent },
-  { path: 'historial-medico/lista-historial', component: ListaHistorialComponent },
+  { path: 'historial-medico/historial-paciente', component: HistorialPacienteComponent },
+  { path: 'historial-medico/agregar-historial', component: AgregarHistorialComponent },
+  { path: 'historial-medico/formulario-historial', component: FormularioHistorialComponent},
   { path: 'paciente-tratamientos/formulario-asignacion', component: FormularioAsignacionComponent },
   { path: 'paciente-tratamientos/lista-asignaciones', component: ListaAsignacionesComponent },
   { path: 'pacientes/detalle-paciente', component: DetallePacienteComponent },

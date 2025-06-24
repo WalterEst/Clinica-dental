@@ -1,0 +1,22 @@
+<div class="container historial-container">
+  <h2 class="titulo-historial">Historial Médico del Paciente</h2>
+
+  <div *ngIf="historial.length === 0" class="alert alert-info" style="color: red; text-align: center;">
+    No hay historial médico registrado para este paciente.
+  </div>
+
+  <div *ngFor="let registro of historial" class="card registro-card">
+    <div class="card-header bg-primary text-white">
+      Registro Médico
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Descripción:</label>
+        <textarea class="form-control texto-historial" [value]="registro.descripcion" rows="4" readonly></textarea>
+      </div>
+      <div class="text-end text-muted fecha-actualizacion">
+        Última actualización: {{ registro.fecha_actualizacion | date: 'medium' }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HistorialMedicoService } from '../../servicios/historial.service';
 
 @Component({
@@ -11,11 +11,8 @@ import { HistorialMedicoService } from '../../servicios/historial.service';
   templateUrl: './formulario-historial.component.html',
   styleUrl: './formulario-historial.component.css'
 })
-export class FormularioHistorialComponent {
-  formulario = this.fb.group({
-    descripcion: ['', Validators.required],
-    id_paciente: ['', Validators.required]
-  });
+export class FormularioHistorialComponent implements OnInit {
+  formulario!: FormGroup; // solo se declara aquí
 
   constructor(
     private fb: FormBuilder,
@@ -23,10 +20,22 @@ export class FormularioHistorialComponent {
     private router: Router
   ) {}
 
+  ngOnInit(): void {
+    this.formulario = this.fb.group({
+      descripcion: ['', Validators.required],
+      id_paciente: ['', Validators.required]
+    });
+  }
+
   onSubmit(): void {
     if (this.formulario.invalid) return;
 
-    this.historialService.create(this.formulario.value).subscribe({
+    const datos = {
+      descripcion: this.formulario.value.descripcion ?? '',
+      id_paciente: this.formulario.value.id_paciente ?? ''
+    };
+
+    this.historialService.create(datos).subscribe({
       next: () => this.router.navigate(['/historial-medico/lista-historial']),
       error: err => console.error('Error al crear historial', err)
     });
