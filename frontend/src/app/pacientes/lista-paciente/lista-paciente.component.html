@@ -18,13 +18,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr routerLink="/pacientes/detalle-paciente">
-          <td>001</td>
-          <td>Juan Pérez</td>
-          <td>34</td>
-          <td>juan.perezexample.com</td>
-          <td>+56 9 1234 5678</td>
-          <td><a routerLink="/pacientes/detalle-paciente" class="btn-nuevo-ac">Ver</a></td>
+        <tr *ngFor="let paciente of pacientes">
+          <td>{{ paciente.id_paciente }}</td>
+          <td>{{ paciente.nombre }} {{ paciente.apellido }}</td>
+          <td>{{ paciente.fecha_nacimiento }}</td>
+          <td>{{ paciente.email }}</td>
+          <td>{{ paciente.telefono }}</td>
+          <td>
+            <a [routerLink]="['/pacientes/detalle-paciente', paciente.id_paciente]" class="btn-nuevo-ac">Ver</a>
+          </td>
         </tr>
       </tbody>
     </table>
