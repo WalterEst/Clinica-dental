@@ -4,10 +4,15 @@ import { Observable } from 'rxjs';
 
 //define la interfaz Paciente con sus propiedades
 export interface Paciente {
-  id_paciente: string;
+  id_paciente?: string;
   nombre: string;
   apellido: string;
-  fecha_nacimiento?: string;
+  /**
+   * Fecha de nacimiento manejada como string en el frontend pero almacenada
+   * como `DATE` en la base de datos.  Se acepta `string` o `Date` para
+   * simplificar la conversión antes de enviar los datos al backend.
+   */
+  fecha_nacimiento?: string | Date;
   telefono?: string;
   email?: string;
   direccion?: string;
@@ -32,11 +37,23 @@ export class PacienteService {
   }
 
   create(paciente: Paciente): Observable<Paciente> {
-    return this.http.post<Paciente>(this.apiUrl, paciente);
+    const payload = {
+      ...paciente,
+      fecha_nacimiento: paciente.fecha_nacimiento
+        ? new Date(paciente.fecha_nacimiento)
+        : undefined,
+    };
+    return this.http.post<Paciente>(this.apiUrl, payload);
   }
 
   update(id: string, paciente: Paciente): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, paciente);
+    const payload = {
+      ...paciente,
+      fecha_nacimiento: paciente.fecha_nacimiento
+        ? new Date(paciente.fecha_nacimiento)
+        : undefined,
+    };
+    return this.http.put(`${this.apiUrl}/${id}`, payload);
   }
 
   delete(id: string): Observable<any> {
