@@ -9,7 +9,21 @@ const Paciente = {
     db.query('SELECT * FROM paciente WHERE id_paciente = ?', [id], callback);
   },
   create: (paciente, callback) => {
-    db.query('INSERT INTO paciente SET ?', paciente, callback);
+    const sql = `
+      INSERT INTO paciente 
+      (nombre, apellido, fecha_nacimiento, telefono, rut, email, direccion)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+    const values = [
+      paciente.nombre,
+      paciente.apellido,
+      paciente.fecha_nacimiento,
+      paciente.telefono,
+      paciente.rut,
+      paciente.email,
+      paciente.direccion
+    ];
+    db.query(sql, values, callback);
   },
   update: (id, paciente, callback) => {
     db.query('UPDATE paciente SET ? WHERE id_paciente = ?', [paciente, id], callback);
