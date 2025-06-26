@@ -1,43 +1,57 @@
-<div class="max-w-md mx-auto p-4">
-  <h1 class="text-2xl font-bold mb-4">Ingresar Pago</h1>
-
-  <form [formGroup]="pagoForm" (ngSubmit)="onSubmit()" class="space-y-4">
-    <div>
-      <label class="block mb-1" for="tratamiento">ID Tratamiento Paciente</label>
-      <input id="tratamiento" type="number" formControlName="id_p_tratamiento" class="input" />
+<div class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2 class="form-title">Ingresar Pago</h2>
+      <p class="form-subtitle">Registra los datos del pago</p>
     </div>
 
-    <div>
-      <label class="block mb-1" for="monto">Monto</label>
-      <input id="monto" type="number" formControlName="monto" class="input" />
-    </div>
+    <form class="patient-form" [formGroup]="pagoForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="tratamiento">ID Tratamiento</label>
+          <input id="tratamiento" type="number" class="form-input" formControlName="id_p_tratamiento" placeholder="ID" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="monto">Monto</label>
+          <input id="monto" type="number" class="form-input" formControlName="monto" placeholder="Monto" required />
+        </div>
+      </div>
 
-    <div>
-      <label class="block mb-1" for="metodo">Método de Pago</label>
-      <select id="metodo" formControlName="metodo_pago" class="input">
-        <option value="efectivo">Efectivo</option>
-        <option value="tarjeta">Tarjeta</option>
-        <option value="transferencia">Transferencia</option>
-      </select>
-    </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="metodo">Método de Pago</label>
+          <select id="metodo" class="form-input" formControlName="metodo_pago" required>
+            <option value="efectivo">Efectivo</option>
+            <option value="tarjeta">Tarjeta</option>
+            <option value="transferencia">Transferencia</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="referencia">Referencia</label>
+          <input id="referencia" type="text" class="form-input" formControlName="referencia" placeholder="Opcional" />
+        </div>
+      </div>
 
-    <div>
-      <label class="block mb-1" for="referencia">Referencia</label>
-      <input id="referencia" type="text" formControlName="referencia" class="input" />
-    </div>
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label class="form-label" for="estado">Estado</label>
+          <select id="estado" class="form-input" formControlName="estado" required>
+            <option value="pendiente">Pendiente</option>
+            <option value="completado">Completado</option>
+            <option value="rechazado">Rechazado</option>
+          </select>
+        </div>
+      </div>
 
-    <div>
-      <label class="block mb-1" for="estado">Estado</label>
-      <select id="estado" formControlName="estado" class="input">
-        <option value="pendiente">Pendiente</option>
-        <option value="completado">Completado</option>
-        <option value="rechazado">Rechazado</option>
-      </select>
-    </div>
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">
+          <span class="btn-text">Guardar Pago</span>
+          <span class="btn-icon">➔</span>
+        </button>
+      </div>
+    </form>
 
-    <button type="submit" class="btn">Guardar Pago</button>
-  </form>
-
-  <p class="text-green-700 mt-4" *ngIf="mensaje">{{ mensaje }}</p>
-  <p class="text-red-700 mt-4" *ngIf="error">{{ error }}</p>
+    <p class="text-green-700 mt-4" *ngIf="mensaje">{{ mensaje }}</p>
+    <p class="error" *ngIf="error">{{ error }}</p>
+  </div>
 </div>
