@@ -27,4 +27,11 @@ export class ListaPacienteComponent implements OnInit {
       error: err => console.error('Error al cargar pacientes', err)
     });
   }
+
+  eliminarPaciente(id: string): void {
+    this.pacienteService.delete(id).subscribe({
+      next: () => this.cargarPacientes(),
+      error: err => console.error('Error al eliminar paciente', err)
+    });
+  }
 }

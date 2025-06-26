@@ -5,6 +5,7 @@ const mysql = require('mysql2');
 const cors = require('cors');
 
 const app = express();
+const router = express.Router();
 const port = 3000;
 
 // Conexión a la base de datos
@@ -25,12 +26,12 @@ app.use(cors());
 
 // Función utilitaria para generar rutas CRUD
 function generarCRUD(path, modelo, idField) {
-  app.get(`/${path}`, (req, res) => modelo.getAll((err, result) => {
+  router.get(`/${path}`, (req, res) => modelo.getAll((err, result) => {
     if (err) return res.status(500).send(`Error al obtener ${path}`);
     res.json(result);
   }));
 
-  app.get(`/${path}/:id`, (req, res) => {
+  router.get(`/${path}/:id`, (req, res) => {
     modelo.getById(req.params.id, (err, result) => {
       if (err) return res.status(500).send(`Error al obtener ${path} por ID`);
       if (!result.length) return res.status(404).send(`${path} no encontrado`);
@@ -38,21 +39,21 @@ function generarCRUD(path, modelo, idField) {
     });
   });
 
-  app.post(`/${path}`, (req, res) => {
+  router.post(`/${path}`, (req, res) => {
     modelo.create(req.body, (err, result) => {
       if (err) return res.status(500).send(`Error al crear ${path}`);
       res.status(201).json({ mensaje: `${path} creado correctamente`, idInsertado: result.insertId });
     });
   });
 
-  app.put(`/${path}/:id`, (req, res) => {
+  router.put(`/${path}/:id`, (req, res) => {
     modelo.update(req.params.id, req.body, (err) => {
       if (err) return res.status(500).send(`Error al actualizar ${path}`);
       res.json({ mensaje: `${path} actualizado correctamente` });
     });
   });
 
-  app.delete(`/${path}/:id`, (req, res) => {
+  router.delete(`/${path}/:id`, (req, res) => {
     modelo.delete(req.params.id, (err) => {
       if (err) return res.status(500).send(`Error al eliminar ${path}`);
       res.json({ mensaje: `${path} eliminado correctamente` });
@@ -140,6 +141,9 @@ const rutas = [
 ];
 
 rutas.forEach(([ruta, modelo]) => generarCRUD(ruta, modelo));
+
+// Prefijo para todas las rutas
+app.use('/api', router);
 
 // Iniciar servidor
 app.listen(port, () => {

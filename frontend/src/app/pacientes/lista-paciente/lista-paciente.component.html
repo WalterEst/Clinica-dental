@@ -26,6 +26,7 @@
           <td>{{ paciente.telefono }}</td>
           <td>
             <a [routerLink]="['/pacientes/detalle-paciente', paciente.id_paciente]" class="btn-nuevo-ac">Ver</a>
+            <button (click)="eliminarPaciente(paciente.id_paciente)" class="btn-nuevo-ac">Eliminar</button>
           </td>
         </tr>
       </tbody>

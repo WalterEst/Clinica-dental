@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 //define la interfaz Paciente con sus propiedades
 export interface Paciente {
@@ -18,7 +19,7 @@ export interface Paciente {
 export class PacienteService {
 
   //url base del backend para los pacientes
-  private apiUrl = 'http://localhost:3000/api/pacientes';
+  private apiUrl = `${environment.apiUrl}/pacientes`;
 
   //inyecta HttpClient para hacer peticiones HTTP
   constructor(private http: HttpClient) {}
