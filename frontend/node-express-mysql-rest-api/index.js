@@ -10,10 +10,10 @@ const port = 3000;
 
 // Conexión a la base de datos
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'clinicadb'
+  host: process.env.MYSQL_HOST || 'localhost',
+  user: process.env.MYSQL_USER || 'root',
+  password: process.env.MYSQL_PASSWORD || '',
+  database: process.env.MYSQL_DATABASE || 'clinicadb'
 });
 
 db.connect(err => {
