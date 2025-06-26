@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 //define la interfaz Paciente con sus propiedades
 export interface Paciente {
   id_paciente?: string;
+  /** Identificador nacional chileno del paciente */
+  rut?: string;
   nombre: string;
   apellido: string;
   /**

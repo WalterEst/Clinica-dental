@@ -24,6 +24,7 @@ export class FormularioPacienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.formulario = this.fb.group({
+      rut: ['', Validators.required],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       fecha_nacimiento: ['', Validators.required],
