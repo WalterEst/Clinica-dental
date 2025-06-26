@@ -15,6 +15,7 @@ import { PacienteService } from '../../servicios/paciente.service';
 })
 export class FormularioPacienteComponent implements OnInit {
   pacienteForm!: FormGroup;
+  errorMsg: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -28,16 +29,21 @@ export class FormularioPacienteComponent implements OnInit {
       apellido: ['', Validators.required],
       fecha_nacimiento: ['', Validators.required],
       telefono: ['', Validators.required],
+      rut: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       direccion: ['', Validators.required]
     });
   }
 
   onSubmit(): void {
+    this.errorMsg = '';
     if (this.pacienteForm.invalid) return;
     this.pacienteService.create(this.pacienteForm.value).subscribe({
       next: () => this.router.navigate(['/pacientes/lista-paciente']),
-      error: err => console.error('Error al crear paciente', err)
+      error: err => {
+        this.errorMsg = err?.error?.mensaje || 'Error al crear paciente';
+        console.error('Error al crear paciente', err);
+      }
     });
   }
 }

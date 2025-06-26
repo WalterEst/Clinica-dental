@@ -10,6 +10,7 @@ export interface Paciente {
   apellido: string;
   fecha_nacimiento?: string;
   telefono?: string;
+  rut?: string;
   email?: string;
   direccion?: string;
 }

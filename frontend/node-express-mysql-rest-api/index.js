@@ -65,7 +65,20 @@ function generarCRUD(path, modelo, idField) {
 const Paciente = {
   getAll: cb => db.query('SELECT * FROM paciente', cb),
   getById: (id, cb) => db.query('SELECT * FROM paciente WHERE id_paciente = ?', [id], cb),
-  create: (data, cb) => db.query('INSERT INTO paciente SET ?', data, cb),
+  create: (data, cb) => 
+  db.query(
+    'INSERT INTO paciente (rut, nombre, apellido, fecha_nacimiento, telefono, email, direccion) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+    [
+      data.rut,
+      data.nombre,
+      data.apellido,
+      data.fecha_nacimiento,
+      data.telefono,
+      data.email,
+      data.direccion
+    ],
+    cb
+  ),
   update: (id, data, cb) => db.query('UPDATE paciente SET ? WHERE id_paciente = ?', [data, id], cb),
   delete: (id, cb) => db.query('DELETE FROM paciente WHERE id_paciente = ?', [id], cb)
 };
