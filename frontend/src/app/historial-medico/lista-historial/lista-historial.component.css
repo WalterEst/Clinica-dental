@@ -1,9 +1,0 @@
-.tabla {
-  width: 100%;
-  border-collapse: collapse;
-}
-.tabla th,
-.tabla td {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-}
