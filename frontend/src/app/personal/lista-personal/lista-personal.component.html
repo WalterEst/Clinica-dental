@@ -1,0 +1,39 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="personal-section">
+  <div class="contenedor">
+    <div class="cabecera-listado">
+      <h2>Listado de Personal</h2>
+      <a class="btn-nuevo" routerLink="/personal/formulario-personal">+ Nuevo Personal</a>
+    </div>
+    <table class="tabla-personal">
+      <thead>
+        <tr>
+          <th>Rut</th>
+          <th>Nombre</th>
+          <th>Rol</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let personal of personal">
+          <td>{{ personal.rut }}</td>
+          <td>{{ personal.nombre }} {{ personal.apellido }}</td>
+          <td>{{ personal.rol }}</td>
+          <td>{{ personal.email }}</td>
+          <td>{{ personal.telefono }}</td>
+          <td>
+            <div class="botones-acciones">
+              <a [routerLink]="['/personal/detalle-personal', personal.rut]" class="btn-nuevo-ac">Detalles</a>
+              <button (click)="eliminarPersonal(personal.rut)" class="btn-eliminar">Eliminar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,29 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2 class="form-title">Agregar Historial Médico a {{ pacienteNombre }}</h2>
+      <p class="form-subtitle">{{ formatearRut(rut) }}</p>
+    </div>
+
+    <form [formGroup]="historialForm" (ngSubmit)="onSubmit()" class="patient-form">
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="descripcion" class="form-label">Descripción <span style="color:red">*</span></label>
+          <textarea id="descripcion" formControlName="descripcion" rows="5" class="form-input" placeholder="Ingrese la descripción del historial médico"></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="historialForm.invalid || loading">Guardar</button>
+        <button type="button" class="submit-btn cancel-btn" (click)="cancelar()">Cancelar</button>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+  </div>
+</section>
+
+<app-footer></app-footer>

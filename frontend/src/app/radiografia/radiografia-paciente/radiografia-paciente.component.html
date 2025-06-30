@@ -1,0 +1,49 @@
+<section class="paciente-section">
+  <div class="contenedor">
+    <div *ngIf="cargando">
+      <p>Cargando radiografías...</p>
+    </div>
+
+    <div *ngIf="!cargando && radiografias.length > 0">
+      <div *ngFor="let radio of radiografias" class="radiografia-item-wrapper">
+        <!-- Área clickeable que navega al detalle -->
+        <div class="radiografia-item clickable" (click)="verDetalleRadiografia(radio.id_radiografia)">
+          <table class="tabla-paciente">
+            <tr>
+              <th>Fecha de toma</th>
+              <td>{{ radio.fecha_toma | date:'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+            <tr *ngIf="radio.tipo">
+              <th>Tipo</th>
+              <td>{{ radio.tipo }}</td>
+            </tr>
+            <tr *ngIf="radio.observaciones">
+              <th>Observaciones</th>
+              <td>{{ radio.observaciones }}</td>
+            </tr>
+            <tr *ngIf="radio.archivo">
+              <th>Archivo</th>
+              <td>
+                <a 
+                  [href]="'/uploads/radiografias/' + radio.archivo" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  (click)="$event.stopPropagation()">
+                  Ver radiografía
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!cargando && radiografias.length === 0">
+      <p>No se encontraron radiografías para este paciente.</p>
+    </div>
+
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+  </div>
+</section>

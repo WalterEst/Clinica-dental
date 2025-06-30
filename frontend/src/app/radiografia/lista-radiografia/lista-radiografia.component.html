@@ -1,0 +1,51 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="paciente-section">
+  <div class="contenedor">
+    <div class="cabecera-listado">
+      <h2>Listado de Radiografías</h2>
+      <a class="btn-nuevo" routerLink="/radiografia/formulario-radiografia">+ Nueva Radiografía</a>
+    </div>
+    <table class="tabla-paciente">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha de Toma</th>
+          <th>Tipo</th>
+          <th>Observaciones</th>
+          <th>Nombre Paciente</th>
+          <th>Archivo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let radiografia of radiografias">
+          <td>{{ radiografia.id_radiografia }}</td>
+          <td>{{ radiografia.fecha_toma | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ radiografia.tipo || 'Sin tipo' }}</td>
+          <td>{{ radiografia.observaciones || 'N/A' }}</td>
+          <td>{{ radiografia.nombre }} {{ radiografia.apellido }}</td>
+          <td>
+            <a *ngIf="radiografia.archivo" [href]="'http://localhost:3000/uploads/' + radiografia.archivo" target="_blank" class="btn-ver">
+              Ver archivo
+            </a>
+            <span *ngIf="!radiografia.archivo">No disponible</span>
+          </td>
+
+          <td>
+            <div class="botones-acciones">
+              <a [routerLink]="['/radiografia/detalle-radiografia', radiografia.id_radiografia]" class="btn-ver">
+                Detalles
+              </a>
+              <button (click)="eliminarRadiografia(radiografia.id_radiografia)" class="btn-eliminar">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<app-footer></app-footer>

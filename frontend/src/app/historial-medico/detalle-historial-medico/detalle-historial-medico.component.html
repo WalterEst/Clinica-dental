@@ -1,0 +1,46 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2 class="form-title">Detalle Historial Médico</h2>
+      <p class="form-subtitle">Visualiza y edita la información del historial médico seleccionado</p>
+    </div>
+
+    <form [formGroup]="historialForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="id_historial">ID Historial</label>
+          <input class="form-input" id="id_historial" formControlName="id_historial" readonly />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label class="form-label" for="descripcion">Descripción</label>
+          <textarea class="form-input" id="descripcion" formControlName="descripcion" rows="4"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="fecha_actualizacion">Fecha de actualización</label>
+          <input class="form-input" id="fecha_actualizacion" formControlName="fecha_actualizacion" readonly />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="historialForm.invalid">Guardar</button>
+        <button type="button" class="submit-btn eliminar-btn" (click)="eliminar()">Eliminar</button>
+        <button type="button" class="submit-btn" (click)="cancelar()">Cancelar</button>
+        
+      </div>
+    </form>
+
+    <div *ngIf="loading" class="mensaje-cargando">Cargando datos...</div>
+    <div *ngIf="errorMessage" class="mensaje-error">{{ errorMessage }}</div>
+  </div>
+</section>
+
+<app-footer></app-footer>

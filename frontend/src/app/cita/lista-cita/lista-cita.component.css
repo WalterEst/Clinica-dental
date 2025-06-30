@@ -1,0 +1,207 @@
+.cita-section {
+  background-color: #f8f9fc;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.cita-section h2 {
+  color: #004F85;
+  font-size: 2em;
+  margin: 0;
+}
+
+.contenedor {
+  max-width: 1250px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.cabecera-listado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-nuevo {
+  text-decoration: none;
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  color: white;
+  border: none;
+  padding: 15px 15px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  min-width: 200px;
+}
+
+.btn-nuevo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-nuevo:hover::before {
+  left: 100%;
+}
+
+.btn-nuevo:hover {
+  background: linear-gradient(135deg, #00acc1 0%, #003c6c 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+      0 10px 25px -5px rgba(6, 182, 212, 0.4),
+      0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-cita {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-cita thead {
+  background-color: #004F85;
+  color: white;
+}
+
+.tabla-cita th,
+.tabla-cita td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-cita tbody tr:hover {
+  background-color: #e0f7fa;
+  cursor: pointer;
+}
+
+/* Contenedor para los botones en la tabla */
+.botones-acciones {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Botones "Ver" y "Eliminar" con estilo moderno igual al .submit-btn */
+.btn-ver, .btn-eliminar {
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+  min-width: 80px;
+  text-decoration: none; /* Para enlaces <a> */
+}
+
+/* Botón eliminar con color rojo degradado */
+.btn-eliminar {
+  background: linear-gradient(135deg, #e53e3e 0%, #9b2c2c 100%);
+}
+
+/* Efecto brillo para ambos botones */
+.btn-ver::before,
+.btn-eliminar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-ver:hover::before,
+.btn-eliminar:hover::before {
+  left: 100%;
+}
+
+/* Hover efectos */
+.btn-ver:hover {
+  background: linear-gradient(135deg, #00acc1 0%, #003c6c 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 25px -5px rgba(6, 182, 212, 0.4),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-eliminar:hover {
+  background: linear-gradient(135deg, #9b2c2c 0%, #6b1f1f 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 25px -5px rgba(229, 62, 62, 0.6),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Active estado */
+.btn-ver:active,
+.btn-eliminar:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contenedor {
+    padding: 20px;
+  }
+  
+  .btn-nuevo, .btn-ver, .btn-eliminar {
+    min-width: 120px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .botones-acciones {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cabecera-listado {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btn-nuevo {
+    min-width: 100%;
+    text-align: center;
+  }
+
+  .botones-acciones {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-ver, .btn-eliminar {
+    min-width: 100%;
+  }
+}
