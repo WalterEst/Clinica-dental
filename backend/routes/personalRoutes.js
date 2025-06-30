@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/personalController');
 
-//define rutas para funciones de obtener, crear, actualizar y eliminar
-router.get('/', controller.getPersonal);
-router.get('/doctores', controller.getDoctores);
-router.get('/:id', controller.getPersonalById);
+router.get('/', controller.getAllPersonal);
 router.post('/', controller.createPersonal);
-router.put('/:id', controller.updatePersonal);    
-router.delete('/:id', controller.deletePersonal); 
+router.get('/:rut', controller.getPersonalByRut);
+router.put('/:rut', controller.updatePersonal);  // usa RUT, coherente con todo
+router.delete('/:rut', controller.deletePersonal);
+
+
 
 module.exports = router;

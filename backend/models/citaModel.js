@@ -1,30 +1,42 @@
-const db = require('../config/database');
+const db = require('../config/db');
 
-//define Cita con funciones para interactuar con cita en la base de datos
-const Cita = {
-  getAll: (callback) => {
-    const sql = `
-      SELECT c.*, 
-             CONCAT(p.nombre, ' ', p.apellido) AS nombre_paciente, 
-             p.id_paciente AS rut_paciente
-      FROM cita c
-      JOIN paciente p ON c.id_paciente = p.id_paciente
-    `;
-    db.query(sql, callback);
-  },
-  getById: (id, callback) => {
-    db.query('SELECT * FROM cita WHERE id_cita = ?', [id], callback);
-  },
-  create: (cita, callback) => {
-    db.query('INSERT INTO cita SET ?', cita, callback);
-  },
-  update: (id, cita, callback) => {
-    db.query('UPDATE cita SET ? WHERE id_cita = ?', [cita, id], callback);
-  },
-  delete: (id, callback) => {
-    db.query('DELETE FROM cita WHERE id_cita = ?', [id], callback);
-  }
+const getAllCita = (callback) => {
+  const sql = `
+    SELECT c.id_cita, c.fecha_hora, c.duracion_minutos, c.estado, c.observaciones,
+           p.rut AS paciente_rut,
+           p.nombre AS paciente_nombre,
+           p.apellido AS paciente_apellido
+    FROM cita c
+    JOIN paciente p ON c.id_paciente = p.id_paciente
+  `;
+  db.query(sql, callback);
 };
 
 
-module.exports = Cita;
+const createCita = (data, callback) => {
+  const sql = 'INSERT INTO cita SET ?';
+  db.query(sql, data, callback);
+};
+
+const getCitaByid = (id, callback) => {
+  const query = 'SELECT * FROM cita WHERE id_cita = ?';
+  db.query(query, [id], callback);
+};
+
+const updateCitaByid = (id, data, callback) => {
+  const sql = 'UPDATE cita SET ? WHERE id_cita = ?';
+  db.query(sql, [data, id], callback);
+};
+
+const deleteCita = (id, callback) => {
+  const sql = 'DELETE FROM cita WHERE id_cita = ?';
+  db.query(sql, [id], callback);
+};
+
+module.exports = {
+  getAllCita,
+  createCita,
+  getCitaByid,
+  updateCitaByid,
+  deleteCita
+};

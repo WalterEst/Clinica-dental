@@ -1,22 +1,57 @@
-const db = require('../config/database');
+const db = require('../config/db');
 
-//define Radiografia con funciones para interactuar con radiografia en la base de datos
-const Radiografia = {
-  getAll: (callback) => {
-    db.query('SELECT * FROM radiografia', callback);
-  },
-  getById: (id, callback) => {
-    db.query('SELECT * FROM radiografia WHERE id_radiografia = ?', [id], callback);
-  },
-  create: (radiografia, callback) => {
-    db.query('INSERT INTO radiografia SET ?', radiografia, callback);
-  },
-  update: (id, radiografia, callback) => {
-    db.query('UPDATE radiografia SET ? WHERE id_radiografia = ?', [radiografia, id], callback);
-  },
-  delete: (id, callback) => {
-    db.query('DELETE FROM radiografia WHERE id_radiografia = ?', [id], callback);
-  }
+const getAllRadiografias = (callback) => {
+  const sql = `
+    SELECT r.*, p.nombre, p.apellido
+    FROM radiografia r
+    INNER JOIN paciente p ON r.id_paciente = p.id_paciente
+    ORDER BY r.fecha_toma DESC
+  `;
+  db.query(sql, callback);
 };
 
-module.exports = Radiografia;
+const getRadiografiaById = (id, callback) => {
+  const sql = `
+  SELECT r.*, p.rut AS rutPaciente, p.nombre, p.apellido
+  FROM radiografia r
+  JOIN paciente p ON r.id_paciente = p.id_paciente
+  WHERE r.id_radiografia = ?
+  `;
+  db.query(sql, [id], callback);
+};
+
+const getRadiografiasByRut = (rut, callback) => {
+  const sql = `
+    SELECT r.*, p.nombre, p.apellido
+    FROM radiografia r
+    INNER JOIN paciente p ON r.id_paciente = p.id_paciente
+    WHERE p.rut = ?
+    ORDER BY r.fecha_toma DESC
+  `;
+  db.query(sql, [rut], callback);
+};
+
+const createRadiografia = (data, callback) => {
+  const sql = 'INSERT INTO radiografia SET ?';
+  db.query(sql, data, callback);
+};
+
+const updateRadiografia = (id, data, callback) => {
+  const sql = 'UPDATE radiografia SET ? WHERE id_radiografia = ?';
+  db.query(sql, [data, id], callback);
+};
+
+
+const deleteRadiografia = (id, callback) => {
+  const sql = 'DELETE FROM radiografia WHERE id_radiografia = ?';
+  db.query(sql, [id], callback);
+};
+
+module.exports = { 
+  getAllRadiografias,
+  getRadiografiaById,
+  getRadiografiasByRut,
+  createRadiografia,
+  updateRadiografia,
+  deleteRadiografia
+};

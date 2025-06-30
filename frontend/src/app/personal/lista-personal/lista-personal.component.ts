@@ -1,36 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { PersonalService, Personal } from '../../services/personal.service';
 import { NavBarComponent } from '../../estatico/nav-bar/nav-bar.component';
 import { FooterComponent } from '../../estatico/footer/footer.component';
-import { PersonalService, Personal } from '../../servicios/personal.service';
 
 @Component({
   selector: 'app-lista-personal',
   standalone: true,
   imports: [CommonModule, RouterModule, NavBarComponent, FooterComponent],
   templateUrl: './lista-personal.component.html',
-  styleUrl: './lista-personal.component.css'
+  styleUrls: ['./lista-personal.component.css']
 })
-export class ListaPersonalComponent implements OnInit{
+export class ListaPersonalComponent implements OnInit {
   personal: Personal[] = [];
-  error: string = '';
 
-  constructor(private personalService: PersonalService) { }
+  constructor(private personalService: PersonalService) {}
 
   ngOnInit(): void {
-    this.loadPersonal();
+    this.cargarPersonal();
   }
 
-  loadPersonal(): void {
-    this.personalService.getAll().subscribe({
-      next: (data) => {
-        this.personal = data;
-      },
-      error: (err) => {
-        this.error = 'Error al cargar las personal';
-        console.error(err);
-      }
+  cargarPersonal() {
+    this.personalService.getAllPersonal().subscribe({
+      next: (data) => this.personal = data,
+      error: (err) => console.error('Error al obtener personal:', err)
     });
   }
+
+  eliminarPersonal(rut: string | undefined) {
+    if (!rut) {
+      alert('RUT no válido');
+      return;
+    }
+    
+    if (confirm('¿Estás seguro de eliminar este personal?')) {
+      this.personalService.deletePersonal(rut).subscribe({
+        next: () => {
+          alert('Personal eliminado correctamente.');
+          this.cargarPersonal();
+        },
+        error: (err) => {
+          console.error('Error al eliminar personal:', err);
+          alert('Error al eliminar personal.');
+        }
+      });
+    }
+  }
+
 }

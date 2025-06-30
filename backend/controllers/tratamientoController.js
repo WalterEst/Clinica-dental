@@ -1,48 +1,83 @@
-const Tratamiento = require('../models/tratamientoModel');
+const model = require('../models/tratamientoModel');
 
-//obtener los tratamientos
-const getTratamientos = (req, res, next) => {
-  Tratamiento.getAll((err, data) => {
-    if (err) return next(new Error('Error al obtener tratamientos'));
-    res.json(data);
+
+const getAllTratamientos = (req, res) => {
+  model.getAllTratamientos((err, results) => {
+    if (err) {
+      console.error('Error al obtener tratamientos:', err);
+      return res.status(500).json({ error: 'Error al obtener tratamientos' });
+    }
+    res.json(results);
   });
 };
 
-//obtener un tratamiento especifico
-const getTratamientoById = (req, res, next) => {
-  Tratamiento.getById(req.params.id, (err, data) => {
-    if (err) return next(new Error('Error al obtener tratamiento por ID'));
-    res.json(data[0] || {});
+const getTratamientoById = (req, res) => {
+  const id = req.params.id;
+
+  model.getTratamientoById(id, (err, results) => {
+    if (err) {
+      console.error('Error al obtener tratamiento por id:', err);
+      return res.status(500).json({ error: 'Error al obtener tratamiento' });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'Tratamiento no encontrado' });
+    }
+    res.json(results[0]);
   });
 };
 
-//crea un nuevo tratamiento
-const createTratamiento = (req, res, next) => {
-  Tratamiento.create(req.body, (err, result) => {
-    if (err) return next(new Error('Error al agregar tratamiento'));
-    res.status(201).json({ id: result.insertId, ...req.body });
-  });
+const createTratamiento = (req, res) => {
+  const data = req.body;
+
+  const callback = (err, result) => {
+    if (err) {
+      console.error('Error al crear tratamiento:', err);
+      return res.status(500).json({ error: 'Error al crear tratamiento' });
+    }
+    res.status(201).json({ id: result.insertId, ...data });
+  };
+
+  model.createTratamiento(data, callback);
 };
 
-//actualiza un tratamiento
-const updateTratamiento = (req, res, next) => {
-  Tratamiento.update(req.params.id, req.body, (err, result) => {
-    if (err) return next(new Error('Error al actualizar tratamiento'));
-    res.json({ message: 'Tratamiento actualizado correctamente' });
-  });
+const updateTratamiento = (req, res) => {
+  const id = req.params.id;  
+  const data = req.body;
+
+  const callback = (err, result) => {
+    if (err) {
+      console.error('Error al actualizar Tratamiento:', err);
+      return res.status(500).json({ error: 'Error al actualizar Tratamiento' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Tratamiento no encontrado para actualizar' });
+    }
+    res.json({ message: 'Tratamiento actualizado correctamente', id, ...data });
+  };
+
+  model.updateTratamiento(id, data, callback);  // función del modelo corregida más abajo
 };
 
-//elimina un tratamiento
-const deleteTratamiento = (req, res, next) => {
-  Tratamiento.delete(req.params.id, (err, result) => {
-    if (err) return next(new Error('Error al eliminar tratamiento'));
+
+const deleteTratamiento = (req, res) => {
+  const id = req.params.id;
+
+  const callback = (err, result) => {
+    if (err) {
+      console.error('Error al eliminar tratamiento:', err);
+      return res.status(500).json({ error: 'Error al eliminar tratamiento' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Tratamiento no encontrado' });
+    }
     res.json({ message: 'Tratamiento eliminado correctamente' });
-  });
+  };
+
+  model.deleteTratamiento(id, callback);
 };
 
-//exporta las funciones
 module.exports = {
-  getTratamientos,
+  getAllTratamientos,
   getTratamientoById,
   createTratamiento,
   updateTratamiento,

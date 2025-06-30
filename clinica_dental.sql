@@ -1,17 +1,17 @@
--- Tabla: paciente
-CREATE TABLE paciente (
-  id_paciente INT NOT NULL AUTO_INCREMENT,
-  rut CHAR(12) NOT NULL,
-  nombre VARCHAR(50) NOT NULL,
-  apellido VARCHAR(50) NOT NULL,
-  fecha_nacimiento DATE DEFAULT NULL,
-  telefono VARCHAR(15) DEFAULT NULL,
-  email VARCHAR(100) DEFAULT NULL,
-  direccion VARCHAR(200) DEFAULT NULL,
-  fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (id_paciente),
-  KEY idx_paciente_nombre (nombre, apellido)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  -- Tabla: paciente
+  CREATE TABLE paciente (
+    id_paciente INT NOT NULL AUTO_INCREMENT,
+    rut CHAR(12) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    fecha_nacimiento DATE DEFAULT NULL,
+    telefono VARCHAR(15) DEFAULT NULL,
+    email VARCHAR(100) DEFAULT NULL,
+    direccion VARCHAR(200) DEFAULT NULL,
+    fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_paciente),
+    KEY idx_paciente_nombre (nombre, apellido)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Tabla: tratamiento
 CREATE TABLE tratamiento (
@@ -82,9 +82,9 @@ CREATE TABLE pagos (
   id_p_tratamiento INT NOT NULL,
   fecha_pago DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   monto DECIMAL(10,2) NOT NULL,
-  metodo_pago ENUM('efectivo', 'tarjeta', 'transferencia') NOT NULL,
+  metodo_pago ENUM('Efectivo', 'Tarjeta', 'Transferencia') NOT NULL,
   referencia VARCHAR(50) DEFAULT NULL,
-  estado ENUM('pendiente', 'completado', 'rechazado') DEFAULT 'pendiente',
+  estado ENUM('Pendiente', 'Completado', 'Rechazado') DEFAULT 'Pendiente',
   fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id_pago),
   KEY id_p_tratamiento (id_p_tratamiento),

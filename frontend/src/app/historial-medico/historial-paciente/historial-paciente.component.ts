@@ -1,56 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { HistorialMedicoService, HistorialMedico } from '../../services/historial-medico.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NavBarComponent } from "../../estatico/nav-bar/nav-bar.component";
-import { FooterComponent } from "../../estatico/footer/footer.component";
-import { HistorialMedicoService, HistorialMedico } from '../../servicios/historial.service';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-historial-paciente',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './historial-paciente.component.html',
   styleUrls: ['./historial-paciente.component.css']
 })
 export class HistorialPacienteComponent implements OnInit {
-  idPaciente!: number;
-  historial: HistorialMedico[] = [];
-  nuevoHistorial = '';
+  historiales: HistorialMedico[] = [];
+  cargando = true;
+  error = '';
+
+  @Input() rutPaciente: string = '';
 
   constructor(
+    private historialmedicoService: HistorialMedicoService,
     private route: ActivatedRoute,
-    private historialService: HistorialMedicoService
+    private router: Router 
   ) {}
 
   ngOnInit(): void {
-    this.idPaciente = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.idPaciente) {
-      this.cargarHistorial();
+    if (!this.rutPaciente) {
+      this.rutPaciente = this.route.snapshot.paramMap.get('rut') || '';
+    }
+
+    if (this.rutPaciente) {
+      this.cargarHistoriales();
+    } else {
+      this.error = 'No se especificó el RUT del paciente.';
+      this.cargando = false;
     }
   }
 
-  cargarHistorial(): void {
-    this.historialService.getByPaciente(this.idPaciente).subscribe({
-      next: (data) => this.historial = data,
-      error: (err) => console.error('Error al cargar historial médico', err)
-    });
-  }
-
-  agregarHistorial(): void {
-    if (!this.nuevoHistorial.trim()) return;
-
-    const datos: HistorialMedico = {
-      descripcion: this.nuevoHistorial,
-      id_paciente: String(this.idPaciente)
-    };
-
-    this.historialService.create(datos).subscribe({
-      next: () => {
-        this.nuevoHistorial = '';
-        this.cargarHistorial();
+  cargarHistoriales() {
+    this.cargando = true;
+    this.historialmedicoService.getHistorialByPacienteRut(this.rutPaciente).subscribe({
+      next: (data) => {
+        this.historiales = data.sort(
+          (a, b) => new Date(b.fecha_actualizacion).getTime() - new Date(a.fecha_actualizacion).getTime()
+        );
+        this.cargando = false;
       },
-      error: err => console.error('Error al crear historial', err)
+      error: (err) => {
+        this.error = 'No se pudo cargar el historial médico.';
+        console.error(err);
+        this.cargando = false;
+      }
     });
   }
+
+  verDetalleHistorial(idHistorial: number) {
+  this.router.navigate(['/historial-medico/detalle-historial-medico', idHistorial]);
+  }
+
 }

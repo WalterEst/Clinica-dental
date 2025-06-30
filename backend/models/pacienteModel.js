@@ -1,36 +1,38 @@
-const db = require('../config/database');
+const db = require('../config/db');
 
-//define Paciente con funciones para interactuar con paciente en la base de datos
-const Paciente = {
-  getAll: (callback) => {
-    db.query('SELECT * FROM paciente', callback);
-  },
-  getById: (id, callback) => {
-    db.query('SELECT * FROM paciente WHERE id_paciente = ?', [id], callback);
-  },
-  create: (paciente, callback) => {
-    const sql = `
-      INSERT INTO paciente 
-      (nombre, apellido, fecha_nacimiento, telefono, rut, email, direccion)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-    const values = [
-      paciente.nombre,
-      paciente.apellido,
-      paciente.fecha_nacimiento,
-      paciente.telefono,
-      paciente.rut,
-      paciente.email,
-      paciente.direccion
-    ];
-    db.query(sql, values, callback);
-  },
-  update: (id, paciente, callback) => {
-    db.query('UPDATE paciente SET ? WHERE id_paciente = ?', [paciente, id], callback);
-  },
-  delete: (id, callback) => {
-    db.query('DELETE FROM paciente WHERE id_paciente = ?', [id], callback);
-  }
+const getAllPaciente = (callback) => {
+  const sql = 'SELECT * FROM paciente';
+  db.query(sql, callback);
 };
 
-module.exports = Paciente;
+const createPaciente = (data, callback) => {
+  const sql = 'INSERT INTO paciente SET ?';
+  db.query(sql, data, callback);
+};
+
+const getPacienteByRut = (rut, callback) => {
+  const query = 'SELECT * FROM paciente WHERE rut = ?'; // usa "rut" como campo
+  db.query(query, [rut], callback);
+};
+
+
+const updatePacienteByRut = (rut, data, callback) => {
+  const sql = 'UPDATE paciente SET ? WHERE rut = ?';
+  db.query(sql, [data, rut], callback);
+};
+
+
+const deletePaciente = (rut, callback) => {
+  const sql = 'DELETE FROM paciente WHERE rut = ?';
+  db.query(sql, [rut], callback);
+};
+
+
+
+module.exports = {
+  getAllPaciente,
+  createPaciente,
+  getPacienteByRut,
+  updatePacienteByRut,
+  deletePaciente
+};

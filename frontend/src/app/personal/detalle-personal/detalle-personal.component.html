@@ -1,0 +1,60 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2 class="form-title">Detalle de Personal</h2>
+      <p class="form-subtitle">Visualiza y edita la información del personal seleccionado</p>
+    </div>
+
+    <form class="patient-form" [formGroup]="personalForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="rut">RUT</label>
+          <input class="form-input" id="rut" formControlName="rut" readonly />
+        </div>
+      </div>
+
+      <div class="form-row">
+      <div class="form-group">
+          <label class="form-label" for="nombre">Nombre</label>
+          <input class="form-input" id="nombre" formControlName="nombre" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="apellido">Apellido</label>
+          <input class="form-input" id="apellido" formControlName="apellido" readonly />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" id="email" formControlName="email" type="email" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="telefono">Teléfono</label>
+          <input class="form-input" id="telefono" formControlName="telefono" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="rol">Rol</label>
+          <select class="form-input" id="rol" formControlName="rol" required>
+            <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="personalForm.invalid">Guardar</button>
+        <button type="button" class="submit-btn" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+
+    <div *ngIf="loading" class="mensaje-cargando">Cargando datos...</div>
+    <div *ngIf="errorMessage" class="mensaje-error">{{ errorMessage }}</div>
+  </div>
+</section>
+
+<app-footer></app-footer>

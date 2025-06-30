@@ -1,31 +1,29 @@
 const express = require('express');
 const cors = require('cors');
-const errorHandler = require('./middlewares/errorHandler');
+const path = require('path');
 
 const app = express();
 const port = 3000;
 
-// middleware
+// Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// rutas existentes
-app.use('/api/pacientes', require('./routes/pacienteRoutes'));
-app.use('/api/tratamientos', require('./routes/tratamientoRoutes'));
-app.use('/api/paciente-tratamientos', require('./routes/paciente_tratamientoRoutes'));
-app.use('/api/citas', require('./routes/citaRoutes'));
-app.use('/api/historiales', require('./routes/historial_medicoRoutes'));
-app.use('/api/pagos', require('./routes/pagosRoutes'));
+// Servir archivos estáticos desde /uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Rutas API
 app.use('/api/personal', require('./routes/personalRoutes'));
-app.use('/api/radiografias', require('./routes/radiografiaRoutes'));
+app.use('/api/paciente', require('./routes/pacienteRoutes'));
+app.use('/api/cita', require('./routes/citaRoutes'));
+app.use('/api/historial', require('./routes/historial-medicoRoutes'));
+app.use('/api/tratamiento', require('./routes/tratamientoRoutes'));
+app.use('/api/paciente-tratamiento', require('./routes/paciente-tratamientoRoutes'));
+app.use('/api/radiografia', require('./routes/radiografiaRoutes'));
+app.use('/api/pago', require('./routes/pagoRoutes'));
 
-// ruta login
-// app.use('/api/auth', require('./routes/loginRoutes'));
-
-// middleware de errores
-app.use(errorHandler);
-
-// inicio del servidor
+// Inicio del servidor
 app.listen(port, () => {
   console.log(`Servidor backend escuchando en http://localhost:${port}`);
 });

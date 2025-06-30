@@ -1,0 +1,117 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h1 class="form-title">Registrar Paciente</h1>
+      <p class="form-subtitle">Complete la información del paciente</p>
+    </div>
+
+    <form class="patient-form" (ngSubmit)="guardar()" #form="ngForm" novalidate>
+      <!-- Fila 1: Nombre y Apellido -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input
+            id="nombre"
+            name="nombre"
+            type="text"
+            class="form-input"
+            placeholder="Nombre"
+            [(ngModel)]="nuevoPaciente.nombre"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="apellido" class="form-label">Apellido</label>
+          <input
+            id="apellido"
+            name="apellido"
+            type="text"
+            class="form-input"
+            placeholder="Apellido"
+            [(ngModel)]="nuevoPaciente.apellido"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Fila 2: RUT y Fecha de Nacimiento -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="rut" class="form-label">RUT</label>
+          <input
+            id="rut"
+            name="rut"
+            type="text"
+            class="form-input"
+            placeholder="Ej: 12345678-9"
+            [(ngModel)]="nuevoPaciente.rut"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+          <input
+            id="fecha_nacimiento"
+            name="fecha_nacimiento"
+            type="date"
+            class="form-input"
+            [(ngModel)]="nuevoPaciente.fecha_nacimiento"
+          />
+        </div>
+      </div>
+
+      <!-- Fila 3: Teléfono y Email -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="telefono" class="form-label">Teléfono</label>
+          <input
+            id="telefono"
+            name="telefono"
+            type="tel"
+            class="form-input"
+            placeholder="Teléfono"
+            [(ngModel)]="nuevoPaciente.telefono"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class="form-input"
+            placeholder="Correo electrónico"
+            [(ngModel)]="nuevoPaciente.email"
+          />
+        </div>
+      </div>
+
+      <!-- Fila 4: Dirección -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="direccion" class="form-label">Dirección</label>
+          <input
+            id="direccion"
+            name="direccion"
+            type="text"
+            class="form-input"
+            placeholder="Dirección del paciente"
+            [(ngModel)]="nuevoPaciente.direccion"
+          />
+        </div>
+      </div>
+
+      <!-- Botón de envío -->
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="form.invalid">
+          <span class="btn-text">Guardar</span>
+          <i class="fa-solid fa-check btn-icon"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

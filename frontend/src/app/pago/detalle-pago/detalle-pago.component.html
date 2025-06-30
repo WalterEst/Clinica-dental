@@ -1,0 +1,70 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2 class="form-title">Detalle de Pago</h2>
+      <p class="form-subtitle">Visualiza y edita la información del pago seleccionado</p>
+    </div>
+
+    <form class="patient-form" [formGroup]="pagoForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="id_pago">ID Pago</label>
+          <input class="form-input" id="id_pago" formControlName="id_pago" readonly />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="fecha_pago">Fecha de Pago</label>
+          <input class="form-input" id="fecha_pago" formControlName="fecha_pago" readonly />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label class="form-label" for="nombre_tratamiento">Tratamiento</label>
+          <input class="form-input" id="nombre_tratamiento" formControlName="nombre_tratamiento" readonly />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="monto">Monto</label>
+          <input class="form-input" id="monto" type="number" formControlName="monto" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="metodo_pago">Método de Pago</label>
+          <select class="form-input" id="metodo_pago" formControlName="metodo_pago">
+            <option *ngFor="let metodo of metodos" [value]="metodo">{{ metodo }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="referencia">Referencia</label>
+          <input class="form-input" id="referencia" formControlName="referencia" placeholder="Ej: Nº transacción" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="estado">Estado</label>
+          <select class="form-input" id="estado" formControlName="estado">
+            <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="pagoForm.invalid">Guardar</button>
+        <button type="button" class="submit-btn" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+
+    <div *ngIf="loading" class="mensaje-cargando">Cargando datos...</div>
+    <div *ngIf="errorMessage" class="mensaje-error">{{ errorMessage }}</div>
+  </div>
+</section>
+
+<app-footer></app-footer>

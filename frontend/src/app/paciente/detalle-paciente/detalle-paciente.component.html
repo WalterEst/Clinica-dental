@@ -1,0 +1,65 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="paciente-section">
+  <div class="contenedor" *ngIf="paciente; else cargandoContenido">
+    <div class="form-header">
+      <h2 class="form-title">Detalle de {{ paciente.nombre }} {{ paciente.apellido }}</h2>
+      <p class="form-subtitle">Visualiza la información médica y personal registrada</p>
+    </div>
+
+    <table class="tabla-paciente">
+      <tbody>
+        <tr>
+          <th>RUT:</th>
+          <td>{{ paciente.rut }}</td>
+        </tr>
+        <tr>
+          <th>Fecha de nacimiento:</th>
+          <td>{{ paciente.fecha_nacimiento | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+          <th>Email:</th>
+          <td>{{ paciente.email }}</td>
+        </tr>
+        <tr>
+          <th>Teléfono:</th>
+          <td>{{ paciente.telefono }}</td>
+        </tr>
+        <tr>
+          <th>Dirección:</th>
+          <td>{{ paciente.direccion }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cabecera-listado">
+      <a [routerLink]="['/paciente/editar-paciente', paciente.rut]" class="btn-ver">Editar</a>
+    </div>
+
+    <hr>
+
+    <h3>Historial Médico</h3>
+    <app-historial-paciente [rutPaciente]="paciente.rut"></app-historial-paciente>
+    <div class="cabecera-listado">
+      <a [routerLink]="['/historial-medico/formulario-historial-medico', paciente.rut]" class="btn-ver">Agregar Historial</a>
+    </div>
+    <h3>Tratamientos</h3>
+    <app-tratamiento-paciente [rutPaciente]="paciente.rut"></app-tratamiento-paciente>
+    <div class="cabecera-listado">
+      <a [routerLink]="['/tratamiento/nuevo-tratam-paciente', paciente.rut]" class="btn-ver">Agregar Tratamiento</a>
+    </div>
+
+    <h3>Radiografías</h3>
+    <app-radiografia-paciente [rutPaciente]="paciente.rut"></app-radiografia-paciente>
+    <div class="cabecera-listado">
+      <a [routerLink]="['/radiografia/formulario-radiografia', paciente.rut]" class="btn-ver">Agregar Radiografía</a>
+    </div>
+  </div>
+
+  <!-- Contenido alternativo mientras carga -->
+  <ng-template #cargandoContenido>
+    <div style="text-align:center; margin-top:20px;">Cargando información del paciente...</div>
+  </ng-template>
+</section>
+
+<app-footer></app-footer>

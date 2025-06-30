@@ -1,49 +1,87 @@
-const Radiografia = require('../models/radiografiaModel');
+const model = require('../models/radiografiaModel');
 
-//obtiene las radiografia
-const getRadiografias = (req, res, next) => {
-  Radiografia.getAll((err, data) => {
-    if (err) return next(new Error('Error al obtener radiografías'));
-    res.json(data);
+const getAllRadiografias = (req, res) => {
+  model.getAllRadiografias((err, results) => {
+    if (err) return res.status(500).json({ error: 'Error al obtener radiografías' });
+    res.json(results);
   });
 };
 
-//obtiene una radiografia especifica
-const getRadiografiaById = (req, res, next) => {
-  Radiografia.getById(req.params.id, (err, data) => {
-    if (err) return next(new Error('Error al obtener radiografía por ID'));
-    res.json(data[0] || {});
+const getRadiografiaById = (req, res) => {
+  const id = req.params.id;
+  model.getRadiografiaById(id, (err, results) => {
+    if (err) return res.status(500).json({ error: 'Error al obtener radiografía' });
+    if (results.length === 0) return res.status(404).json({ error: 'Radiografía no encontrada' });
+    res.json(results[0]);
   });
 };
 
-//crea un registro de una radiografia
-const createRadiografia = (req, res, next) => {
-  Radiografia.create(req.body, (err, result) => {
-    if (err) return next(new Error('Error al agregar radiografía'));
-    res.status(201).json({ id: result.insertId, ...req.body });
+const getRadiografiasByRut = (req, res) => {
+  const rut = req.params.rut;
+
+  model.getRadiografiasByRut(rut, (err, results) => {
+    if (err) {
+      console.error('Error al obtener radiografías:', err);
+      return res.status(500).json({ error: 'Error al obtener radiografías' });
+    }
+
+    if (!results || results.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron radiografías para este paciente' });
+    }
+
+    res.json(results);
   });
 };
 
-//actualiza un registro de una radiografia
-const updateRadiografia = (req, res, next) => {
-  Radiografia.update(req.params.id, req.body, (err, result) => {
-    if (err) return next(new Error('Error al actualizar radiografía'));
-    res.json({ message: 'Radiografía actualizada correctamente' });
+  const createRadiografia = (req, res) => {
+    const data = req.body;
+
+    // Asegúrate de remover el rutPaciente si viene
+    delete data.rutPaciente;
+
+    // Verificamos si se subió archivo
+    if (req.file) {
+      data.archivo = req.file.filename;
+    }
+
+    model.createRadiografia(data, (err, result) => {
+      if (err) {
+        console.error('Error al crear radiografía:', err);
+        return res.status(500).json({ error: 'Error al crear radiografía' });
+      }
+      res.status(201).json({ id: result.insertId, ...data });
+    });
+  };
+
+
+
+const updateRadiografia = (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+  if (req.file) {
+    data.archivo = req.file.filename;
+  }
+  model.updateRadiografia(id, data, (err, result) => {
+    if (err) return res.status(500).json({ error: 'Error al actualizar radiografía' });
+    if (result.affectedRows === 0) return res.status(404).json({ error: 'Radiografía no encontrada' });
+    res.json({ message: 'Radiografía actualizada correctamente', id, ...data });
   });
 };
 
-//elimina el registro de una radiografia
-const deleteRadiografia = (req, res, next) => {
-  Radiografia.delete(req.params.id, (err, result) => {
-    if (err) return next(new Error('Error al eliminar radiografía'));
+
+const deleteRadiografia = (req, res) => {
+  const id = req.params.id;
+  model.deleteRadiografia(id, (err, result) => {
+    if (err) return res.status(500).json({ error: 'Error al eliminar radiografía' });
+    if (result.affectedRows === 0) return res.status(404).json({ error: 'Radiografía no encontrada' });
     res.json({ message: 'Radiografía eliminada correctamente' });
   });
 };
 
-//exporta las funciones
 module.exports = {
-  getRadiografias,
+  getAllRadiografias,
   getRadiografiaById,
+  getRadiografiasByRut,
   createRadiografia,
   updateRadiografia,
   deleteRadiografia

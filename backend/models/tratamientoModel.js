@@ -1,22 +1,35 @@
-const db = require('../config/database');
+const db = require('../config/db');
 
-//define Tratamiento con funciones para interactuar con tratamiento en la base de datos
-const Tratamiento = {
-  getAll: (callback) => {
-    db.query('SELECT * FROM tratamiento', callback);
-  },
-  getById: (id, callback) => {
-    db.query('SELECT * FROM tratamiento WHERE id_tratamiento = ?', [id], callback);
-  },
-  create: (tratamiento, callback) => {
-    db.query('INSERT INTO tratamiento SET ?', tratamiento, callback);
-  },
-  update: (id, tratamiento, callback) => {
-    db.query('UPDATE tratamiento SET ? WHERE id_tratamiento = ?', [tratamiento, id], callback);
-  },
-  delete: (id, callback) => {
-    db.query('DELETE FROM tratamiento WHERE id_tratamiento = ?', [id], callback);
-  }
+const getAllTratamientos = (callback) => {
+  const sql = `SELECT * FROM tratamiento ORDER BY id_tratamiento ASC`;
+  db.query(sql, callback);
 };
 
-module.exports = Tratamiento;
+const getTratamientoById = (id, callback) => {
+  const sql = 'SELECT * FROM tratamiento WHERE id_tratamiento = ?';
+  db.query(sql, [id], callback);
+};
+
+const createTratamiento = (data, callback) => {
+  const sql = 'INSERT INTO tratamiento SET ?';
+  db.query(sql, data, callback);
+};
+
+const updateTratamiento = (id, data, callback) => {
+  const sql = 'UPDATE tratamiento SET ? WHERE id_tratamiento = ?';
+  db.query(sql, [data, id], callback);
+};
+
+
+const deleteTratamiento = (id, callback) => {
+  const sql = 'DELETE FROM tratamiento WHERE id_tratamiento = ?';
+  db.query(sql, [id], callback);
+};
+
+module.exports = {
+  getAllTratamientos,
+  getTratamientoById,
+  createTratamiento,
+  updateTratamiento,
+  deleteTratamiento
+};

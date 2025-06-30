@@ -1,27 +1,38 @@
-const db = require('../config/database');
+const db = require('../config/db');
 
-//define Personal con funciones para interactuar con personal en la base de datos
-const Personal = {
-  getAll: (callback) => {
-    db.query('SELECT * FROM personal', callback);
-  },
-  getDoctores: (callback) => {
-    const sql = "SELECT id_personal, nombre, apellido FROM personal WHERE rol = 'doctor'";
-    db.query(sql, callback);
-  },
-  getById: (id, callback) => {
-    db.query('SELECT * FROM personal WHERE id_personal = ?', [id], callback);
-  },
- create: (personal, callback) => {
-  const sql = `INSERT INTO personal (nombre, apellido, rut, email, telefono, rol, activo, fecha_ingreso) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-  db.query(sql, [personal.nombre, personal.apellido, personal.rut , personal.telefono, personal.email, personal.rol, personal.activo ? 1 : 0, personal.fecha_ingreso], callback);
-},
-  update: (id, personal, callback) => {
-    db.query('UPDATE personal SET ? WHERE id_personal = ?', [personal, id], callback);
-  },
-  delete: (id, callback) => {
-    db.query('DELETE FROM personal WHERE id_personal = ?', [id], callback);
-  }
+const getAllPersonal = (callback) => {
+  const sql = 'SELECT * FROM personal';
+  db.query(sql, callback);
 };
 
-module.exports = Personal;
+const createPersonal = (data, callback) => {
+  const sql = 'INSERT INTO personal SET ?';
+  db.query(sql, data, callback);
+};
+
+const getPersonalByRut = (rut, callback) => {
+  const query = 'SELECT * FROM personal WHERE rut = ?'; // usa "rut" como campo
+  db.query(query, [rut], callback);
+};
+
+
+const updatePersonalByRut = (rut, data, callback) => {
+  const sql = 'UPDATE personal SET ? WHERE rut = ?';
+  db.query(sql, [data, rut], callback);
+};
+
+
+const deletePersonal = (rut, callback) => {
+  const sql = 'DELETE FROM personal WHERE rut = ?';
+  db.query(sql, [rut], callback);
+};
+
+
+
+module.exports = {
+  getAllPersonal,
+  createPersonal,
+  getPersonalByRut,
+  updatePersonalByRut,
+  deletePersonal
+};

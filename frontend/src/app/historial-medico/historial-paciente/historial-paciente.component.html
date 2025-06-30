@@ -1,30 +1,31 @@
-<div class="container historial-container">
-  <h2 class="titulo-historial">Historial Médico del Paciente</h2>
+<div *ngIf="cargando">
+  <p>Cargando historial...</p>
+</div>
 
-  <div *ngIf="historial.length === 0" class="alert alert-info" style="color: red; text-align: center;">
-    No hay historial médico registrado para este paciente.
+<div *ngIf="!cargando && historiales.length > 0">
+  <div *ngFor="let historial of historiales" class="contenedor historial-wrapper">
+
+    <!-- Contenedor clickeable -->
+    <div class="historial-item clickable" (click)="verDetalleHistorial(historial.id_historial)">
+      <table class="tabla-paciente">
+        <tr>
+          <th>Descripción</th>
+          <td>{{ historial.descripcion }}</td>
+        </tr>
+        <tr>
+          <th>Actualización</th>
+          <td>{{ historial.fecha_actualizacion | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+      </table>
+    </div>
+
   </div>
+</div>
 
-  <div *ngFor="let registro of historial" class="card registro-card">
-    <div class="card-header bg-primary text-white">
-      Registro Médico
-    </div>
-    <div class="card-body">
-      <div class="mb-3">
-        <label class="form-label fw-bold">Descripción:</label>
-        <textarea class="form-control texto-historial" [value]="registro.descripcion" rows="4" readonly></textarea>
-      </div>
-      <div class="text-end text-muted fecha-actualizacion">
-        Última actualización: {{ registro.fecha_actualizacion | date: 'medium' }}
-      </div>
-    </div>
-  </div>
+<div *ngIf="!cargando && historiales.length === 0">
+  <p>No se encontró historial médico registrado para este paciente.</p>
+</div>
 
-  <form (ngSubmit)="agregarHistorial()" class="mt-4">
-    <div class="mb-3">
-      <label for="nuevoHistorial" class="form-label fw-bold">Nuevo Registro</label>
-      <textarea id="nuevoHistorial" class="form-control" [(ngModel)]="nuevoHistorial" name="nuevoHistorial" rows="3"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Agregar Historial</button>
-  </form>
+<div *ngIf="error" class="error">
+  {{ error }}
 </div>

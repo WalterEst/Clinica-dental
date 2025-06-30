@@ -1,53 +1,87 @@
-const Cita = require('../models/citaModel');
+const model = require('../models/citaModel');
 
-//obtiene todas las citas
-const getCitas = (req, res, next) => {
-  Cita.getAll((err, data) => {
-    if (err) return next(new Error('Error al obtener citas'));
-    res.json(data);
+const getAllCita = (req, res) => {
+  const callback = (err, results) => {
+    if (err) {
+      console.error('Error al obtener Cita:', err);
+      return res.status(500).json({ error: 'Error al obtener Cita' });
+    }
+    res.json(results);
+  };
+
+  model.getAllCita(callback);  // <-- Función correcta
+};
+
+const createCita = (req, res) => {
+  const data = req.body;
+  const callback = (err, result) => {
+    if (err) {
+      console.error('Error al insertar Cita:', err);
+      return res.status(500).json({ error: 'Error al insertar Cita' });
+    }
+    res.status(201).json({ id: result.insertId, ...data });
+  };
+
+  model.createCita(data, callback);
+};
+
+const getCitaByid = (req, res) => {
+  const id = req.params.id;
+
+  model.getCitaByid(id, (err, result) => {
+    if (err) {
+      console.error('Error al obtener Cita por id:', err);
+      return res.status(500).json({ error: 'Error al obtener Cita por id' });
+    }
+
+    if (!result || result.length === 0) {
+      return res.status(404).json({ error: 'Cita no encontrado' });
+    }
+
+    res.json(result[0]);  // si esperas un solo resultado
   });
 };
 
-//obtiene una cita especifica
-const getCitaById = (req, res, next) => {
-  Cita.getById(req.params.id, (err, data) => {
-    if (err) return next(new Error('Error al obtener citas por ID'));
-    if (!data[0]) return next(new Error('Cita no encontrada'));
-    res.json(data[0]);
+
+const updateCita = (req, res) => {
+  const id = req.params.id;  // <- se usará id, no id
+  const data = req.body;
+
+  const callback = (err, result) => {
+    if (err) {
+      console.error('Error al actualizar Cita:', err);
+      return res.status(500).json({ error: 'Error al actualizar Cita' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Cita no encontrado para actualizar' });
+    }
+    res.json({ message: 'Cita actualizado correctamente', id, ...data });
+  };
+
+  model.updateCitaByid(id, data, callback);  // función del modelo corregida más abajo
+};
+
+
+const deleteCita = (req, res) => {
+  const id = req.params.id;
+
+  model.deleteCita(id, (err, result) => {
+    if (err) {
+      console.error('Error al eliminar Cita:', err);
+      return res.status(500).json({ error: 'Error al eliminar Cita' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Cita no encontrado para eliminar' });
+    }
+    res.json({ message: 'Cita eliminado correctamente' });
   });
 };
 
-//crea una cita
-const createCita = (req, res, next) => {
-  Cita.create(req.body, (err, result) => {
-    if (err) return next(new Error('Error al agregar citas'));
-    res.status(201).json({ id: result.insertId, ...req.body });
-  });
-};
 
-//actualiza una cita
-const updateCita = (req, res, next) => {
-  Cita.update(req.params.id, req.body, (err, result) => {
-    if (err) return next(new Error('Error al actualizar Cita'));
-    if (result.affectedRows === 0) return next(new Error('Cita no encontrada para actualizar'));
-    res.json({ message: 'Cita actualizada correctamente' });
-  });
-};
-
-//elimina una cita
-const deleteCita = (req, res, next) => {
-  Cita.delete(req.params.id, (err, result) => {
-    if (err) return next(new Error('Error al eliminar Cita'));
-    if (result.affectedRows === 0) return next(new Error('Cita no encontrada para eliminar'));
-    res.json({ message: 'Cita eliminada correctamente' });
-  });
-};
-
-//exporta las funciones
 module.exports = {
-  getCitas,
-  getCitaById,
-  createCita,
+  getAllCita,
+  createCita, 
+  getCitaByid,
   updateCita,
   deleteCita
 };

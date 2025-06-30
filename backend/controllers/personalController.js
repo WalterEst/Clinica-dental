@@ -1,72 +1,87 @@
-const Personal = require('../models/personalModel');
+const model = require('../models/personalModel');
 
-const getPersonal = (req, res, next) => {
-  Personal.getAll((err, data) => {
+const getAllPersonal = (req, res) => {
+  const callback = (err, results) => {
     if (err) {
       console.error('Error al obtener personal:', err);
-      return next(err);
+      return res.status(500).json({ error: 'Error al obtener personal' });
     }
-    res.json(data);
-  });
+    res.json(results);
+  };
+
+  model.getAllPersonal(callback);  // <-- Función correcta
 };
 
-const getDoctores = (req, res, next) => {
-  Personal.getDoctores((err, data) => {
+const createPersonal = (req, res) => {
+  const data = req.body;
+  const callback = (err, result) => {
     if (err) {
-      console.error('Error al obtener doctores:', err);
-      return next(err);
+      console.error('Error al insertar personal:', err);
+      return res.status(500).json({ error: 'Error al insertar personal' });
     }
-    res.json(data);
-  });
+    res.status(201).json({ id: result.insertId, ...data });
+  };
+
+  model.createPersonal(data, callback);
 };
 
-const getPersonalById = (req, res, next) => {
-  Personal.getById(req.params.id, (err, data) => {
+const getPersonalByRut = (req, res) => {
+  const rut = req.params.rut;
+
+  model.getPersonalByRut(rut, (err, result) => {
     if (err) {
-      console.error('Error al obtener personal por ID:', err);
-      return next(err);
+      console.error('Error al obtener personal por RUT:', err);
+      return res.status(500).json({ error: 'Error al obtener personal por RUT' });
     }
-    res.json(data[0] || {});
+
+    if (!result || result.length === 0) {
+      return res.status(404).json({ error: 'Personal no encontrado' });
+    }
+
+    res.json(result[0]);  // si esperas un solo resultado
   });
 };
 
-const createPersonal = (req, res, next) => {
-  console.log('Datos recibidos en controlador:', req.body);
 
-  Personal.create(req.body, (err, result) => {
-    if (err) {
-      console.error('Error al agregar personal:', err);
-      return next(err);
-    }
-    res.status(201).json({ id: result.insertId, ...req.body });
-  });
-};
+const updatePersonal = (req, res) => {
+  const rut = req.params.rut;  // <- se usará rut, no id
+  const data = req.body;
 
-const updatePersonal = (req, res, next) => {
-  Personal.update(req.params.id, req.body, (err, result) => {
+  const callback = (err, result) => {
     if (err) {
       console.error('Error al actualizar personal:', err);
-      return next(err);
+      return res.status(500).json({ error: 'Error al actualizar personal' });
     }
-    res.json({ message: 'Personal actualizado correctamente' });
-  });
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Personal no encontrado para actualizar' });
+    }
+    res.json({ message: 'Personal actualizado correctamente', rut, ...data });
+  };
+
+  model.updatePersonalByRut(rut, data, callback);  // función del modelo corregida más abajo
 };
 
-const deletePersonal = (req, res, next) => {
-  Personal.delete(req.params.id, (err, result) => {
+
+const deletePersonal = (req, res) => {
+  const rut = req.params.rut;
+
+  model.deletePersonal(rut, (err, result) => {
     if (err) {
       console.error('Error al eliminar personal:', err);
-      return next(err);
+      return res.status(500).json({ error: 'Error al eliminar personal' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Personal no encontrado para eliminar' });
     }
     res.json({ message: 'Personal eliminado correctamente' });
   });
 };
 
+
 module.exports = {
-  getPersonal,
-  getPersonalById,
-  createPersonal,
+  getAllPersonal,
+  createPersonal, 
+  getPersonalByRut,
   updatePersonal,
-  deletePersonal,
-  getDoctores
+  deletePersonal
 };

@@ -1,0 +1,57 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2 class="form-title">Detalle de Tratamiento</h2>
+      <p class="form-subtitle">Visualiza y edita la información del tratamiento seleccionado</p>
+    </div>
+
+    <form class="patient-form" [formGroup]="tratamientoForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="id_tratamiento">ID</label>
+          <input class="form-input" id="id_tratamiento" formControlName="id_tratamiento" readonly />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label class="form-label" for="nombre">Nombre</label>
+          <input class="form-input" id="nombre" formControlName="nombre" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label class="form-label" for="descripcion">Descripción</label>
+          <input class="form-input" id="descripcion" formControlName="descripcion" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="derecho">Derecho (%)</label>
+          <input class="form-input" id="derecho" type="number" formControlName="derecho" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="costo_base">Costo Base</label>
+          <input class="form-input" id="costo_base" type="number" formControlName="costo_base" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="tratamientoForm.invalid">Guardar</button>
+        <button type="button" class="submit-btn" (click)="cancelar()">Cancelar</button>
+      </div>
+
+    </form>
+
+    <div *ngIf="loading" class="mensaje-cargando">Cargando tratamiento...</div>
+    <div *ngIf="errorMessage" class="mensaje-error">{{ errorMessage }}</div>
+  </div>
+</section>
+
+<app-footer></app-footer>

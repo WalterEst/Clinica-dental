@@ -1,152 +1,116 @@
 <app-nav-bar></app-nav-bar>
 
 <div class="container">
-  <div class="personal-form-wrapper">
-    <div class="personal-form-header">
-      <h1 class="personal-form-title">Registrar Nuevo Personal</h1>
-      <p class="personal-form-subtitle">Complete la información del personal</p>
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h1 class="form-title">Registrar Personal</h1>
+      <p class="form-subtitle">Complete la información del personal</p>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form class="patient-form" (ngSubmit)="guardar()" #form="ngForm" novalidate>
       <!-- Fila 1: Nombre y Apellido -->
       <div class="form-row">
-        <div class="personal-form-group">
-          <label for="nombre" class="personal-form-label">Nombre</label>
+        <div class="form-group">
+          <label for="nombre" class="form-label">Nombre</label>
           <input
-            type="text"
             id="nombre"
-            formControlName="nombre"
-            class="personal-form-input"
+            name="nombre"
+            type="text"
+            class="form-input"
             placeholder="Nombre"
+            [(ngModel)]="nuevoPersonal.nombre"
+            required
           />
-          <div *ngIf="f['nombre'].touched && f['nombre'].invalid" class="error">
-            El nombre es obligatorio.
-          </div>
         </div>
-
-        <div class="personal-form-group">
-          <label for="apellido" class="personal-form-label">Apellido</label>
+        <div class="form-group">
+          <label for="apellido" class="form-label">Apellido</label>
           <input
-            type="text"
             id="apellido"
-            formControlName="apellido"
-            class="personal-form-input"
-            placeholder="Apellido"
-          />
-          <div *ngIf="f['apellido'].touched && f['apellido'].invalid" class="error">
-            El apellido es obligatorio.
-          </div>
-        </div>
-      </div>
-
-      <!-- Fila 2: RUT y Email -->
-      <div class="form-row">
-        <div class="personal-form-group">
-          <label for="rut" class="personal-form-label">RUT</label>
-          <input
+            name="apellido"
             type="text"
-            id="rut"
-            formControlName="rut"
-            class="personal-form-input"
-            placeholder="12.345.678-9"
-            maxlength="12"
+            class="form-input"
+            placeholder="Apellido"
+            [(ngModel)]="nuevoPersonal.apellido"
+            required
           />
-        </div>
-
-        <div class="personal-form-group">
-          <label for="email" class="personal-form-label">Correo Electrónico</label>
-          <input
-            type="email"
-            id="email"
-            formControlName="email"
-            class="personal-form-input"
-            placeholder="ejemplo@correo.com"
-          />
-          <div *ngIf="f['email'].touched && f['email'].invalid" class="error">
-            <span *ngIf="f['email'].errors?.['required']">El correo es obligatorio.</span>
-            <span *ngIf="f['email'].errors?.['email']">Formato de correo inválido.</span>
-          </div>
         </div>
       </div>
 
-      <!-- Fila 3: Teléfono y Rol -->
+      <!-- Fila 2: RUT y Teléfono -->
       <div class="form-row">
-        <div class="personal-form-group">
-          <label for="telefono" class="personal-form-label">Teléfono</label>
+        <div class="form-group">
+          <label for="rut" class="form-label">RUT</label>
           <input
-            type="tel"
-            id="telefono"
-            formControlName="telefono"
-            class="personal-form-input"
-            placeholder="+56 9 1234 5678"
-            maxlength="15"
+            id="rut"
+            name="rut"
+            type="text"
+            class="form-input"
+            placeholder="RUT"
+            [(ngModel)]="nuevoPersonal.rut"
           />
         </div>
+        <div class="form-group">
+          <label for="telefono" class="form-label">Teléfono</label>
+          <input
+            id="telefono"
+            name="telefono"
+            type="tel"
+            class="form-input"
+            placeholder="Teléfono"
+            [(ngModel)]="nuevoPersonal.telefono"
+          />
+        </div>
+      </div>
 
-        <div class="personal-form-group">
-          <label for="rol" class="personal-form-label">Rol</label>
+      <!-- Fila 3: Email -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class="form-input"
+            placeholder="Email"
+            [(ngModel)]="nuevoPersonal.email"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Fila 4: Rol -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="rol" class="form-label">Rol</label>
           <select
             id="rol"
-            formControlName="rol"
-            class="personal-form-input">
-            <option value="" disabled selected>Seleccione un rol</option>
+            name="rol"
+            class="form-input"
+            [(ngModel)]="nuevoPersonal.rol"
+            required
+          >
             <option value="doctor">Doctor</option>
             <option value="recepcionista">Recepcionista</option>
             <option value="administrativo">Administrativo</option>
           </select>
-          <div *ngIf="f['rol'].touched && f['rol'].invalid" class="error">
-            El rol es obligatorio.
-          </div>
         </div>
       </div>
 
-      <!-- Fila 4: Fecha de ingreso y Activo -->
-      <div class="form-row">
-        <div class="personal-form-group">
-          <label for="fecha_ingreso" class="personal-form-label">Fecha de Ingreso</label>
-          <input
-            type="date"
-            id="fecha_ingreso"
-            formControlName="fecha_ingreso"
-            class="personal-form-input"
-          />
-          <div *ngIf="f['fecha_ingreso'].touched && f['fecha_ingreso'].invalid" class="error">
-            La fecha de ingreso es obligatoria.
-          </div>
-        </div>
-
-        <div class="personal-form-group personal-checkbox-group" style="flex: none; align-items: center;">
-          <input
-            type="checkbox"
-            id="activo"
-            formControlName="activo"
-            class="personal-form-checkbox"
-          />
-          <label for="activo" class="personal-form-label-checkbox">Activo</label>
-        </div>
-      </div>
-
-      <div class="personal-form-actions">
-        <button type="submit" class="personal-submit-btn" [disabled]="form.invalid">
-          <span class="personal-btn-text">Registrar Personal</span>
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="form.invalid">
+          <span class="btn-text">Guardar</span>
           <svg
-            class="personal-btn-icon"
+            class="btn-icon"
             width="20"
             height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
           >
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
-      </div>
-
-      <div *ngIf="successMessage" class="success-message">
-        {{ successMessage }}
       </div>
     </form>
   </div>

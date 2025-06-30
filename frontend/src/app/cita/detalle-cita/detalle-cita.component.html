@@ -1,0 +1,100 @@
+<app-nav-bar></app-nav-bar>
+
+<section class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2 class="form-title">Detalle de Cita</h2>
+      <p class="form-subtitle">Visualiza y edita la información de la cita seleccionada</p>
+    </div>
+
+    <form [formGroup]="citaForm" (ngSubmit)="onSubmit()" class="patient-form">
+
+      <!-- Fecha y Hora -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="fecha">Fecha</label>
+          <input class="form-input" id="fecha" formControlName="fecha" type="date" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="hora">Hora</label>
+          <input class="form-input" id="hora" formControlName="hora" type="time" required />
+        </div>
+      </div>
+
+      <!-- Duración y Estado lado a lado -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="duracion_minutos">Duración (minutos)</label>
+          <input class="form-input" id="duracion_minutos" formControlName="duracion_minutos" type="number" min="1" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="estado">Estado</label>
+          <select class="form-input" id="estado" formControlName="estado" required>
+            <option value="programada">Programada</option>
+            <option value="completada">Completada</option>
+            <option value="cancelada">Cancelada</option>
+            <option value="no_asistio">No asistió</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- RUT y Nombre paciente lado a lado -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="paciente_rut">RUT Paciente</label>
+          <input class="form-input" id="paciente_rut" [value]="pacienteSeleccionado?.rut || ''" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="paciente_nombre">Paciente</label>
+          <input
+            class="form-input"
+            id="paciente_nombre"
+            [value]="
+              pacienteSeleccionado
+                ? pacienteSeleccionado.nombre + ' ' + pacienteSeleccionado.apellido
+                : ''
+            "
+            readonly
+          />
+        </div>
+      </div>
+
+      <!-- Selección Paciente -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label class="form-label" for="id_paciente">Cambiar Paciente</label>
+          <select
+            class="form-input"
+            id="id_paciente"
+            formControlName="id_paciente"
+            required
+            (change)="onPacienteChange($event)"
+          >
+            <option [value]="0" disabled>Seleccione un paciente</option>
+            <option *ngFor="let paciente of pacientes" [value]="paciente.id_paciente">
+              {{ paciente.nombre }} {{ paciente.apellido }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Observaciones -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label class="form-label" for="observaciones">Observaciones</label>
+          <textarea class="form-input" id="observaciones" formControlName="observaciones" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="citaForm.invalid">Guardar</button>
+        <button type="button" class="submit-btn" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+
+    <div *ngIf="loading" class="mensaje-cargando">Cargando datos...</div>
+    <div *ngIf="errorMessage" class="mensaje-error">{{ errorMessage }}</div>
+  </div>
+</section>
+
+<app-footer></app-footer>
