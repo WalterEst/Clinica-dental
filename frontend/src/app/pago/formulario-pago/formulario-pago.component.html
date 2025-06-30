@@ -1,1 +1,69 @@
-<p>formulario-pago works!</p>
+<app-nav-bar></app-nav-bar>
+
+<section class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2 class="form-title">Registrar Pago</h2>
+      <p class="form-subtitle">Asigna el pago a un tratamiento</p>
+    </div>
+
+    <form [formGroup]="pagoForm" (ngSubmit)="onSubmit()" class="patient-form">
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="paciente" class="form-label">Paciente</label>
+          <select id="paciente" class="form-input" formControlName="id_paciente" (change)="onPacienteChange()">
+            <option value="" disabled selected>Seleccione un paciente</option>
+            <option *ngFor="let p of pacientes" [value]="p.id_paciente">{{ p.rut }} - {{ p.nombre }} {{ p.apellido }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="tratamiento" class="form-label">Tratamiento</label>
+          <select id="tratamiento" class="form-input" formControlName="id_p_tratamiento">
+            <option value="" disabled selected>Seleccione un tratamiento</option>
+            <option *ngFor="let t of tratamientos" [value]="t.id_p_tratamiento">{{ t.nombre_tratamiento }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="monto" class="form-label">Monto</label>
+          <input id="monto" type="number" class="form-input" formControlName="monto" />
+        </div>
+        <div class="form-group">
+          <label for="metodo_pago" class="form-label">Método de Pago</label>
+          <select id="metodo_pago" class="form-input" formControlName="metodo_pago">
+            <option *ngFor="let m of metodos" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="referencia" class="form-label">Referencia</label>
+          <input id="referencia" class="form-input" formControlName="referencia" />
+        </div>
+        <div class="form-group">
+          <label for="estado" class="form-label">Estado</label>
+          <select id="estado" class="form-input" formControlName="estado">
+            <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="pagoForm.invalid || loading">Guardar</button>
+        <button type="button" class="submit-btn" (click)="cancelar()">Cancelar</button>
+      </div>
+
+      <div *ngIf="loading" class="mensaje-cargando">Guardando datos...</div>
+      <div *ngIf="errorMessage" class="mensaje-error">{{ errorMessage }}</div>
+    </form>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
